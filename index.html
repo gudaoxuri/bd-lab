@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4-dev">
-<meta name="author" content="v1.0">
+<meta name="author" content="v1.1">
 <title>大数据实验室</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -2134,7 +2134,7 @@ p {
 <div id="header">
 <h1>大数据实验室</h1>
 <div class="details">
-<span id="author" class="author">v1.0</span><br>
+<span id="author" class="author">v1.1</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -2143,123 +2143,129 @@ p {
 <ul class="sectlevel2">
 <li><a href="#true--2">1.1. 课程概要</a></li>
 <li><a href="#true--3">1.2. 资源说明</a></li>
-<li><a href="#true--4">1.3. 环境准备</a></li>
 </ul>
 </li>
-<li><a href="#true--6">2. 大数据总揽</a></li>
-<li><a href="#truespark">3. Spark入门</a></li>
-<li><a href="#truescala">4. Scala入门</a></li>
-<li><a href="#truehadoop">5. Hadoop</a>
+<li><a href="#true--4">2. 环境准备</a>
 <ul class="sectlevel2">
-<li><a href="#true--7">5.1. 环境准备</a></li>
-<li><a href="#true--8">5.2. 安装</a></li>
-<li><a href="#true--9">5.3. 配置(伪分布式)</a></li>
-<li><a href="#true--10">5.4. 初始化</a></li>
-<li><a href="#true--11">5.5. 启动与停止</a></li>
-<li><a href="#true--12">5.6. 测试</a></li>
-<li><a href="#truehdfs">5.7. HDFS常用操作</a></li>
-<li><a href="#true--13">5.8. 常见问题</a></li>
+<li><a href="#true-docker">2.1. 使用Docker创建环境（推荐/可选）</a></li>
+<li><a href="#true-virtual-box">2.2. 使用Virtual box创建环境（可选）</a></li>
+<li><a href="#true--5">2.3. 基本环境创建</a></li>
 </ul>
 </li>
-<li><a href="#truespark-2">6. Spark</a>
+<li><a href="#true--6">3. 大数据总揽</a></li>
+<li><a href="#truespark">4. Spark入门</a></li>
+<li><a href="#truescala">5. Scala入门</a></li>
+<li><a href="#truehadoop">6. Hadoop</a>
 <ul class="sectlevel2">
-<li><a href="#true--14">6.1. 环境准备</a></li>
-<li><a href="#true--15">6.2. 安装</a></li>
-<li><a href="#true--16">6.3. 配置(伪分布式)</a></li>
-<li><a href="#true--17">6.4. 启动与停止</a></li>
-<li><a href="#true--18">6.5. 测试</a></li>
-<li><a href="#trueword-count">6.6. Word Count</a></li>
-<li><a href="#true--19">6.7. 参数说明</a></li>
-<li><a href="#true--20">6.8. 资源调度</a></li>
-<li><a href="#true--21">6.9. 性能调优</a></li>
-<li><a href="#true--22">6.10. 硬件配置</a></li>
-<li><a href="#true-hive">6.11. 整合Hive</a></li>
+<li><a href="#true--7">6.1. 环境准备</a></li>
+<li><a href="#true--8">6.2. 安装</a></li>
+<li><a href="#true--9">6.3. 配置(伪分布式)</a></li>
+<li><a href="#true--10">6.4. 初始化</a></li>
+<li><a href="#true--11">6.5. 启动与停止</a></li>
+<li><a href="#true--12">6.6. 测试</a></li>
+<li><a href="#truehdfs">6.7. HDFS常用操作</a></li>
+<li><a href="#true--13">6.8. 常见问题</a></li>
 </ul>
 </li>
-<li><a href="#truezookeeper">7. Zookeeper</a>
+<li><a href="#truespark-2">7. Spark</a>
 <ul class="sectlevel2">
-<li><a href="#true--23">7.1. 环境准备</a></li>
-<li><a href="#true--24">7.2. 安装</a></li>
-<li><a href="#true--25">7.3. 配置</a></li>
-<li><a href="#true--26">7.4. 启动与停止</a></li>
-<li><a href="#true--27">7.5. 测试</a></li>
-<li><a href="#truezookeepr">7.6. Zookeepr常用命令</a></li>
+<li><a href="#true--14">7.1. 环境准备</a></li>
+<li><a href="#true--15">7.2. 安装</a></li>
+<li><a href="#true--16">7.3. 配置(伪分布式)</a></li>
+<li><a href="#true--17">7.4. 启动与停止</a></li>
+<li><a href="#true--18">7.5. 测试</a></li>
+<li><a href="#trueword-count">7.6. Word Count</a></li>
+<li><a href="#true--19">7.7. 参数说明</a></li>
+<li><a href="#true--20">7.8. 资源调度</a></li>
+<li><a href="#true--21">7.9. 性能调优</a></li>
+<li><a href="#true--22">7.10. 硬件配置</a></li>
+<li><a href="#true-hive">7.11. 整合Hive</a></li>
 </ul>
 </li>
-<li><a href="#truehbase">8. HBase</a>
+<li><a href="#truezookeeper">8. Zookeeper</a>
 <ul class="sectlevel2">
-<li><a href="#true--28">8.1. 环境准备</a></li>
-<li><a href="#true--29">8.2. 安装</a></li>
-<li><a href="#true--30">8.3. 配置(完全分布式)</a></li>
-<li><a href="#true--31">8.4. 启动</a></li>
-<li><a href="#true--32">8.5. 测试</a></li>
+<li><a href="#true--23">8.1. 环境准备</a></li>
+<li><a href="#true--24">8.2. 安装</a></li>
+<li><a href="#true--25">8.3. 配置</a></li>
+<li><a href="#true--26">8.4. 启动与停止</a></li>
+<li><a href="#true--27">8.5. 测试</a></li>
+<li><a href="#truezookeepr">8.6. Zookeepr常用命令</a></li>
 </ul>
 </li>
-<li><a href="#truehive">9. Hive</a>
+<li><a href="#truehbase">9. HBase</a>
 <ul class="sectlevel2">
-<li><a href="#true--33">9.1. 环境准备</a></li>
-<li><a href="#true--34">9.2. 安装</a></li>
-<li><a href="#true--35">9.3. 配置(单机)</a></li>
-<li><a href="#true--36">9.4. 启动</a></li>
-<li><a href="#true--37">9.5. 测试</a></li>
+<li><a href="#true--28">9.1. 环境准备</a></li>
+<li><a href="#true--29">9.2. 安装</a></li>
+<li><a href="#true--30">9.3. 配置(完全分布式)</a></li>
+<li><a href="#true--31">9.4. 启动</a></li>
+<li><a href="#true--32">9.5. 测试</a></li>
 </ul>
 </li>
-<li><a href="#truekafka">10. Kafka</a>
+<li><a href="#truehive">10. Hive</a>
 <ul class="sectlevel2">
-<li><a href="#true--38">10.1. 环境准备</a></li>
-<li><a href="#true--39">10.2. 安装</a></li>
-<li><a href="#true--40">10.3. 配置(伪分布式)</a></li>
-<li><a href="#true--41">10.4. 启动与停止</a></li>
-<li><a href="#true--42">10.5. 测试</a></li>
+<li><a href="#true--33">10.1. 环境准备</a></li>
+<li><a href="#true--34">10.2. 安装</a></li>
+<li><a href="#true--35">10.3. 配置(单机)</a></li>
+<li><a href="#true--36">10.4. 启动</a></li>
+<li><a href="#true--37">10.5. 测试</a></li>
 </ul>
 </li>
-<li><a href="#truesqoop">11. Sqoop</a>
+<li><a href="#truekafka">11. Kafka</a>
 <ul class="sectlevel2">
-<li><a href="#true--43">11.1. 安装</a></li>
-<li><a href="#true--44">11.2. 配置</a></li>
-<li><a href="#true--45">11.3. 测试</a></li>
-<li><a href="#true--46">11.4. 使用</a></li>
+<li><a href="#true--38">11.1. 环境准备</a></li>
+<li><a href="#true--39">11.2. 安装</a></li>
+<li><a href="#true--40">11.3. 配置(伪分布式)</a></li>
+<li><a href="#true--41">11.4. 启动与停止</a></li>
+<li><a href="#true--42">11.5. 测试</a></li>
 </ul>
 </li>
-<li><a href="#truezeppelin">12. Zeppelin</a>
+<li><a href="#truesqoop">12. Sqoop</a>
 <ul class="sectlevel2">
-<li><a href="#true--47">12.1. 安装</a></li>
-<li><a href="#true--48">12.2. 配置</a></li>
-<li><a href="#true--49">12.3. 启动</a></li>
-<li><a href="#true--50">12.4. 测试</a></li>
+<li><a href="#true--43">12.1. 安装</a></li>
+<li><a href="#true--44">12.2. 配置</a></li>
+<li><a href="#true--45">12.3. 测试</a></li>
+<li><a href="#true--46">12.4. 使用</a></li>
 </ul>
 </li>
-<li><a href="#trueothers">13. others</a>
+<li><a href="#truezeppelin">13. Zeppelin</a>
 <ul class="sectlevel2">
-<li><a href="#trueredis">13.1. Redis</a></li>
+<li><a href="#true--47">13.1. 安装</a></li>
+<li><a href="#true--48">13.2. 配置</a></li>
+<li><a href="#true--49">13.3. 启动</a></li>
+<li><a href="#true--50">13.4. 测试</a></li>
 </ul>
 </li>
-<li><a href="#true--53">14. 综合实例：访客分析</a>
+<li><a href="#trueothers">14. others</a>
 <ul class="sectlevel2">
-<li><a href="#true--54">14.1. 业务流程</a></li>
-<li><a href="#true--55">14.2. 涉及技术/框架</a></li>
-<li><a href="#true--56">14.3. 环境</a></li>
-<li><a href="#true--57">14.4. 如何运行</a></li>
-<li><a href="#true--61">14.5. 接口</a></li>
+<li><a href="#trueredis">14.1. Redis</a></li>
 </ul>
 </li>
-<li><a href="#true--64">15. 综合实例：支付宝数据处理</a>
+<li><a href="#true--53">15. 综合实例：访客分析</a>
 <ul class="sectlevel2">
-<li><a href="#true--65">15.1. 业务流程</a></li>
-<li><a href="#true--66">15.2. 涉及技术/框架</a></li>
-<li><a href="#true--67">15.3. 环境</a></li>
-<li><a href="#true--68">15.4. 大数据处理脚本</a></li>
-<li><a href="#true--69">15.5. 如何运行</a></li>
-<li><a href="#true--72">15.6. 接口</a></li>
-<li><a href="#true-zeppelin">15.7. 使用zeppelin查询</a></li>
+<li><a href="#true--54">15.1. 业务流程</a></li>
+<li><a href="#true--55">15.2. 涉及技术/框架</a></li>
+<li><a href="#true--56">15.3. 环境</a></li>
+<li><a href="#true--57">15.4. 如何运行</a></li>
+<li><a href="#true--61">15.5. 接口</a></li>
 </ul>
 </li>
-<li><a href="#true--75">16. 大数据实施建议</a>
+<li><a href="#true--64">16. 综合实例：支付宝数据处理</a>
 <ul class="sectlevel2">
-<li><a href="#true--76">16.1. 集群环境</a></li>
-<li><a href="#true--77">16.2. 大数据团队</a></li>
-<li><a href="#true--78">16.3. 技术选型</a></li>
-<li><a href="#true--83">16.4. 请对以下技术保持关注</a></li>
+<li><a href="#true--65">16.1. 业务流程</a></li>
+<li><a href="#true--66">16.2. 涉及技术/框架</a></li>
+<li><a href="#true--67">16.3. 环境</a></li>
+<li><a href="#true--68">16.4. 大数据处理脚本</a></li>
+<li><a href="#true--69">16.5. 如何运行</a></li>
+<li><a href="#true--72">16.6. 接口</a></li>
+<li><a href="#true-zeppelin">16.7. 使用zeppelin查询</a></li>
+</ul>
+</li>
+<li><a href="#true--75">17. 大数据实施建议</a>
+<ul class="sectlevel2">
+<li><a href="#true--76">17.1. 集群环境</a></li>
+<li><a href="#true--77">17.2. 大数据团队</a></li>
+<li><a href="#true--78">17.3. 技术选型</a></li>
+<li><a href="#true--83">17.4. 请对以下技术保持关注</a></li>
 </ul>
 </li>
 </ul>
@@ -2497,15 +2503,18 @@ p {
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="true--4"><a class="anchor" href="#true--4"></a>1.3. 环境准备</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="true--4"><a class="anchor" href="#true--4"></a>2. 环境准备</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>硬件要求：内存：&gt;=4G，硬盘：&gt;=20G，网络畅通<br>
 系统要求：Centos6.x，开启SSH，推荐使用Docker，也可使用实体机或虚拟机（Vmware、Virtualbox或Hyper-V）<br>
 基本环境：安装完成 JDK8、Scala2.10.x，MySQL、Mongo</p>
 </div>
-<div class="sect3">
-<h4 id="true-docker"><a class="anchor" href="#true-docker"></a>1.3.1. 使用Docker创建环境（推荐/可选）</h4>
+<div class="sect2">
+<h3 id="true-docker"><a class="anchor" href="#true-docker"></a>2.1. 使用Docker创建环境（推荐/可选）</h3>
 <div class="paragraph">
 <p>如您使用的是实体机或虚拟机请忽略此操作。</p>
 </div>
@@ -2635,8 +2644,8 @@ docker run --name bd-lab -h bd -d \
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="true-virtual-box"><a class="anchor" href="#true-virtual-box"></a>1.3.2. 使用Virtual box创建环境（可选）</h4>
+<div class="sect2">
+<h3 id="true-virtual-box"><a class="anchor" href="#true-virtual-box"></a>2.2. 使用Virtual box创建环境（可选）</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -2806,8 +2815,8 @@ chmod 777 /share
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="true--5"><a class="anchor" href="#true--5"></a>1.3.3. 基本环境创建</h4>
+<div class="sect2">
+<h3 id="true--5"><a class="anchor" href="#true--5"></a>2.3. 基本环境创建</h3>
 <div class="paragraph">
 <p>SSH到实验环境</p>
 </div>
@@ -2846,7 +2855,7 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-如无特殊说明后续操作都使用user账号
+如无特殊说明后续操作都使用<code>user</code>账号
 </td>
 </tr>
 </table>
@@ -2854,9 +2863,8 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="true--6"><a class="anchor" href="#true--6"></a>2. 大数据总揽</h2>
+<h2 id="true--6"><a class="anchor" href="#true--6"></a>3. 大数据总揽</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -2873,7 +2881,7 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truespark"><a class="anchor" href="#truespark"></a>3. Spark入门</h2>
+<h2 id="truespark"><a class="anchor" href="#truespark"></a>4. Spark入门</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -2890,7 +2898,7 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truescala"><a class="anchor" href="#truescala"></a>4. Scala入门</h2>
+<h2 id="truescala"><a class="anchor" href="#truescala"></a>5. Scala入门</h2>
 <div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
@@ -2906,7 +2914,7 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truehadoop"><a class="anchor" href="#truehadoop"></a>5. Hadoop</h2>
+<h2 id="truehadoop"><a class="anchor" href="#truehadoop"></a>6. Hadoop</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -2935,7 +2943,7 @@ chmod 0600 ~/.ssh/authorized_keys</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--7"><a class="anchor" href="#true--7"></a>5.1. 环境准备</h3>
+<h3 id="true--7"><a class="anchor" href="#true--7"></a>6.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -2966,7 +2974,7 @@ mkdir logs/hadoop</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--8"><a class="anchor" href="#true--8"></a>5.2. 安装</h3>
+<h3 id="true--8"><a class="anchor" href="#true--8"></a>6.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
@@ -2977,7 +2985,7 @@ mv hadoop-2.7.2 ./frameworks/hadoop</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--9"><a class="anchor" href="#true--9"></a>5.3. 配置(伪分布式)</h3>
+<h3 id="true--9"><a class="anchor" href="#true--9"></a>6.3. 配置(伪分布式)</h3>
 <div class="listingblock">
 <div class="title">vi ./frameworks/hadoop/etc/hadoop/hadoop-env.sh</div>
 <div class="content">
@@ -3053,7 +3061,7 @@ export HADOOP_LOG_DIR=/opt/workspaces/logs/hadoop</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--10"><a class="anchor" href="#true--10"></a>5.4. 初始化</h3>
+<h3 id="true--10"><a class="anchor" href="#true--10"></a>6.4. 初始化</h3>
 <div class="listingblock">
 <div class="title">格式化NameNode</div>
 <div class="content">
@@ -3062,7 +3070,7 @@ export HADOOP_LOG_DIR=/opt/workspaces/logs/hadoop</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--11"><a class="anchor" href="#true--11"></a>5.5. 启动与停止</h3>
+<h3 id="true--11"><a class="anchor" href="#true--11"></a>6.5. 启动与停止</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 启动NameNode
@@ -3094,7 +3102,7 @@ start-mapred.sh 启动MapR</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--12"><a class="anchor" href="#true--12"></a>5.6. 测试</h3>
+<h3 id="true--12"><a class="anchor" href="#true--12"></a>6.6. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 查看HDFS文件
@@ -3103,7 +3111,7 @@ start-mapred.sh 启动MapR</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="truehdfs"><a class="anchor" href="#truehdfs"></a>5.7. HDFS常用操作</h3>
+<h3 id="truehdfs"><a class="anchor" href="#truehdfs"></a>6.7. HDFS常用操作</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 上传文件到HDFS
@@ -3147,7 +3155,7 @@ hadoop fs -copyToLocal [-ignorecrc] [-crc] URI &lt;localdst&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--13"><a class="anchor" href="#true--13"></a>5.8. 常见问题</h3>
+<h3 id="true--13"><a class="anchor" href="#true--13"></a>6.8. 常见问题</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Name node is in safe mode</dt>
@@ -3160,7 +3168,7 @@ hadoop fs -copyToLocal [-ignorecrc] [-crc] URI &lt;localdst&gt;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truespark-2"><a class="anchor" href="#truespark-2"></a>6. Spark</h2>
+<h2 id="truespark-2"><a class="anchor" href="#truespark-2"></a>7. Spark</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -3188,7 +3196,7 @@ hadoop fs -copyToLocal [-ignorecrc] [-crc] URI &lt;localdst&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--14"><a class="anchor" href="#true--14"></a>6.1. 环境准备</h3>
+<h3 id="true--14"><a class="anchor" href="#true--14"></a>7.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -3214,7 +3222,7 @@ mkdir logs/spark</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--15"><a class="anchor" href="#true--15"></a>6.2. 安装</h3>
+<h3 id="true--15"><a class="anchor" href="#true--15"></a>7.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.hust.edu.cn/apache/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz
@@ -3225,7 +3233,7 @@ mv spark-1.6.1-bin-hadoop2.6 ./frameworks/spark</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--16"><a class="anchor" href="#true--16"></a>6.3. 配置(伪分布式)</h3>
+<h3 id="true--16"><a class="anchor" href="#true--16"></a>7.3. 配置(伪分布式)</h3>
 <div class="listingblock">
 <div class="title">vi ./frameworks/spark/conf/spark-env.sh</div>
 <div class="content">
@@ -3244,7 +3252,7 @@ export SCALA_HOME=/opt/env/scala</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--17"><a class="anchor" href="#true--17"></a>6.4. 启动与停止</h3>
+<h3 id="true--17"><a class="anchor" href="#true--17"></a>7.4. 启动与停止</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/spark/sbin/start-all.sh</code></pre>
@@ -3252,7 +3260,7 @@ export SCALA_HOME=/opt/env/scala</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--18"><a class="anchor" href="#true--18"></a>6.5. 测试</h3>
+<h3 id="true--18"><a class="anchor" href="#true--18"></a>7.5. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 执行圆周率计算示例
@@ -3270,7 +3278,7 @@ export SCALA_HOME=/opt/env/scala</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="trueword-count"><a class="anchor" href="#trueword-count"></a>6.6. Word Count</h3>
+<h3 id="trueword-count"><a class="anchor" href="#trueword-count"></a>7.6. Word Count</h3>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -3320,7 +3328,7 @@ sc.textFile("./frameworks/spark/README.md").flatMap(_.split(" ")).filter(wordR.p
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--19"><a class="anchor" href="#true--19"></a>6.7. 参数说明</h3>
+<h3 id="true--19"><a class="anchor" href="#true--19"></a>7.7. 参数说明</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -3540,7 +3548,7 @@ val sc = new SparkContext(conf)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--20"><a class="anchor" href="#true--20"></a>6.8. 资源调度</h3>
+<h3 id="true--20"><a class="anchor" href="#true--20"></a>7.8. 资源调度</h3>
 <div class="paragraph">
 <p>standalone目前只支持简单的先进先出（FIFO）调度器。这个调度器可以支持多用户，你可以控制每个应用所使用的最大资源。默认情况下，Spark应用会申请集群中所有的CPU。</p>
 </div>
@@ -3562,7 +3570,7 @@ val sc = new SparkContext(conf)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--21"><a class="anchor" href="#true--21"></a>6.9. 性能调优</h3>
+<h3 id="true--21"><a class="anchor" href="#true--21"></a>7.9. 性能调优</h3>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -3577,7 +3585,7 @@ val sc = new SparkContext(conf)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--22"><a class="anchor" href="#true--22"></a>6.10. 硬件配置</h3>
+<h3 id="true--22"><a class="anchor" href="#true--22"></a>7.10. 硬件配置</h3>
 <div class="paragraph">
 <p>每个节点：<br>
 * 4-8块磁盘<br>
@@ -3602,7 +3610,7 @@ val sc = new SparkContext(conf)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true-hive"><a class="anchor" href="#true-hive"></a>6.11. 整合Hive</h3>
+<h3 id="true-hive"><a class="anchor" href="#true-hive"></a>7.11. 整合Hive</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -3687,7 +3695,7 @@ show tables;</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truezookeeper"><a class="anchor" href="#truezookeeper"></a>7. Zookeeper</h2>
+<h2 id="truezookeeper"><a class="anchor" href="#truezookeeper"></a>8. Zookeeper</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -3715,7 +3723,7 @@ show tables;</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--23"><a class="anchor" href="#true--23"></a>7.1. 环境准备</h3>
+<h3 id="true--23"><a class="anchor" href="#true--23"></a>8.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -3728,7 +3736,7 @@ mkdir logs/zookeeper</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--24"><a class="anchor" href="#true--24"></a>7.2. 安装</h3>
+<h3 id="true--24"><a class="anchor" href="#true--24"></a>8.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.hust.edu.cn/apache/zookeeper/current/zookeeper-3.4.8.tar.gz
@@ -3739,7 +3747,7 @@ mv zookeeper-3.4.8 ./frameworks/zookeeper</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--25"><a class="anchor" href="#true--25"></a>7.3. 配置</h3>
+<h3 id="true--25"><a class="anchor" href="#true--25"></a>8.3. 配置</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">cat&gt;./frameworks/zookeeper/conf/zoo.cfg&lt;&lt;EOF
@@ -3756,7 +3764,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--26"><a class="anchor" href="#true--26"></a>7.4. 启动与停止</h3>
+<h3 id="true--26"><a class="anchor" href="#true--26"></a>8.4. 启动与停止</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/zookeeper/bin/zkServer.sh start</code></pre>
@@ -3764,7 +3772,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--27"><a class="anchor" href="#true--27"></a>7.5. 测试</h3>
+<h3 id="true--27"><a class="anchor" href="#true--27"></a>8.5. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/zookeeper/bin/zkCli.sh -server localhost:2181
@@ -3774,7 +3782,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="truezookeepr"><a class="anchor" href="#truezookeepr"></a>7.6. Zookeepr常用命令</h3>
+<h3 id="truezookeepr"><a class="anchor" href="#truezookeepr"></a>8.6. Zookeepr常用命令</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 创建文件并初始内容
@@ -3849,7 +3857,7 @@ quit</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truehbase"><a class="anchor" href="#truehbase"></a>8. HBase</h2>
+<h2 id="truehbase"><a class="anchor" href="#truehbase"></a>9. HBase</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -3877,7 +3885,7 @@ quit</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--28"><a class="anchor" href="#true--28"></a>8.1. 环境准备</h3>
+<h3 id="true--28"><a class="anchor" href="#true--28"></a>9.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -3888,7 +3896,7 @@ mkdir logs/hbase</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--29"><a class="anchor" href="#true--29"></a>8.2. 安装</h3>
+<h3 id="true--29"><a class="anchor" href="#true--29"></a>9.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.cnnic.cn/apache/hbase/1.2.1/hbase-1.2.1-bin.tar.gz
@@ -3899,7 +3907,7 @@ mv hbase-1.2.1 ./frameworks/hbase</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--30"><a class="anchor" href="#true--30"></a>8.3. 配置(完全分布式)</h3>
+<h3 id="true--30"><a class="anchor" href="#true--30"></a>9.3. 配置(完全分布式)</h3>
 <div class="listingblock">
 <div class="title">vi ./frameworks/hbase/conf/hbase-env.sh</div>
 <div class="content">
@@ -3939,7 +3947,7 @@ export HBASE_MANAGES_ZK=false</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--31"><a class="anchor" href="#true--31"></a>8.4. 启动</h3>
+<h3 id="true--31"><a class="anchor" href="#true--31"></a>9.4. 启动</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/hbase/bin/start-hbase.sh</code></pre>
@@ -3947,7 +3955,7 @@ export HBASE_MANAGES_ZK=false</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--32"><a class="anchor" href="#true--32"></a>8.5. 测试</h3>
+<h3 id="true--32"><a class="anchor" href="#true--32"></a>9.5. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/hbase/bin/hbase shell
@@ -3967,7 +3975,7 @@ drop 'test'</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truehive"><a class="anchor" href="#truehive"></a>9. Hive</h2>
+<h2 id="truehive"><a class="anchor" href="#truehive"></a>10. Hive</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -3998,7 +4006,7 @@ Hive语法大全<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--33"><a class="anchor" href="#true--33"></a>9.1. 环境准备</h3>
+<h3 id="true--33"><a class="anchor" href="#true--33"></a>10.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -4011,7 +4019,7 @@ mkdir logs/hive</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--34"><a class="anchor" href="#true--34"></a>9.2. 安装</h3>
+<h3 id="true--34"><a class="anchor" href="#true--34"></a>10.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.cnnic.cn/apache/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz
@@ -4022,7 +4030,7 @@ mv apache-hive-1.2.1-bin ./frameworks/hive</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--35"><a class="anchor" href="#true--35"></a>9.3. 配置(单机)</h3>
+<h3 id="true--35"><a class="anchor" href="#true--35"></a>10.3. 配置(单机)</h3>
 <div class="listingblock">
 <div class="title">vi ~/.profile</div>
 <div class="content">
@@ -4144,7 +4152,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--36"><a class="anchor" href="#true--36"></a>9.4. 启动</h3>
+<h3 id="true--36"><a class="anchor" href="#true--36"></a>10.4. 启动</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">nohup ./frameworks/hive/bin/hive --service metastore &gt;/dev/null 2&gt;&amp;1 &amp;</code></pre>
@@ -4152,7 +4160,7 @@ EOF</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--37"><a class="anchor" href="#true--37"></a>9.5. 测试</h3>
+<h3 id="true--37"><a class="anchor" href="#true--37"></a>10.5. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">cat&gt;test_person.txt&lt;&lt;EOF
@@ -4171,7 +4179,7 @@ select * from test_person;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truekafka"><a class="anchor" href="#truekafka"></a>10. Kafka</h2>
+<h2 id="truekafka"><a class="anchor" href="#truekafka"></a>11. Kafka</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -4198,7 +4206,7 @@ select * from test_person;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--38"><a class="anchor" href="#true--38"></a>10.1. 环境准备</h3>
+<h3 id="true--38"><a class="anchor" href="#true--38"></a>11.1. 环境准备</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash"># 切换到工作空间
@@ -4211,7 +4219,7 @@ mkdir logs/kafka</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--39"><a class="anchor" href="#true--39"></a>10.2. 安装</h3>
+<h3 id="true--39"><a class="anchor" href="#true--39"></a>11.2. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.cnnic.cn/apache/kafka/0.8.2.2/kafka_2.10-0.8.2.2.tgz
@@ -4222,7 +4230,7 @@ mv kafka_2.10-0.8.2.2 ./frameworks/kafka</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--40"><a class="anchor" href="#true--40"></a>10.3. 配置(伪分布式)</h3>
+<h3 id="true--40"><a class="anchor" href="#true--40"></a>11.3. 配置(伪分布式)</h3>
 <div class="listingblock">
 <div class="title">vi ./frameworks/kafka/config/server.properties</div>
 <div class="content">
@@ -4270,7 +4278,7 @@ kafka.logs.dir=/opt/workspaces/logs/kafka</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--41"><a class="anchor" href="#true--41"></a>10.4. 启动与停止</h3>
+<h3 id="true--41"><a class="anchor" href="#true--41"></a>11.4. 启动与停止</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">nohup ./frameworks/kafka/bin/kafka-server-start.sh ./frameworks/kafka/config/server.properties &gt;/dev/null 2&gt;&amp;1 &amp;</code></pre>
@@ -4278,7 +4286,7 @@ kafka.logs.dir=/opt/workspaces/logs/kafka</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--42"><a class="anchor" href="#true--42"></a>10.5. 测试</h3>
+<h3 id="true--42"><a class="anchor" href="#true--42"></a>11.5. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
@@ -4295,7 +4303,7 @@ kafka.logs.dir=/opt/workspaces/logs/kafka</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truesqoop"><a class="anchor" href="#truesqoop"></a>11. Sqoop</h2>
+<h2 id="truesqoop"><a class="anchor" href="#truesqoop"></a>12. Sqoop</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -4324,7 +4332,7 @@ Sqoop有两大版本，Sqoop稳定，Sqoop2目前问题比较多，以下使用S
 </table>
 </div>
 <div class="sect2">
-<h3 id="true--43"><a class="anchor" href="#true--43"></a>11.1. 安装</h3>
+<h3 id="true--43"><a class="anchor" href="#true--43"></a>12.1. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirror.bit.edu.cn/apache/sqoop/1.4.6/sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
@@ -4335,7 +4343,7 @@ mv sqoop-1.4.6.bin__hadoop-2.0.4-alpha ./frameworks/sqoop</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--44"><a class="anchor" href="#true--44"></a>11.2. 配置</h3>
+<h3 id="true--44"><a class="anchor" href="#true--44"></a>12.2. 配置</h3>
 <div class="listingblock">
 <div class="title">vi ~/.profile</div>
 <div class="content">
@@ -4363,7 +4371,7 @@ export HIVE_HOME=/opt/workspaces/frameworks/hive</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--45"><a class="anchor" href="#true--45"></a>11.3. 测试</h3>
+<h3 id="true--45"><a class="anchor" href="#true--45"></a>12.3. 测试</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/sqoop/bin/sqoop version</code></pre>
@@ -4371,7 +4379,7 @@ export HIVE_HOME=/opt/workspaces/frameworks/hive</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--46"><a class="anchor" href="#true--46"></a>11.4. 使用</h3>
+<h3 id="true--46"><a class="anchor" href="#true--46"></a>12.4. 使用</h3>
 <div class="listingblock">
 <div class="title">从MySQL数据库导入数据</div>
 <div class="content">
@@ -4401,7 +4409,7 @@ export HIVE_HOME=/opt/workspaces/frameworks/hive</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truezeppelin"><a class="anchor" href="#truezeppelin"></a>12. Zeppelin</h2>
+<h2 id="truezeppelin"><a class="anchor" href="#truezeppelin"></a>13. Zeppelin</h2>
 <div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
@@ -4417,7 +4425,7 @@ export HIVE_HOME=/opt/workspaces/frameworks/hive</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--47"><a class="anchor" href="#true--47"></a>12.1. 安装</h3>
+<h3 id="true--47"><a class="anchor" href="#true--47"></a>13.1. 安装</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget http://mirrors.cnnic.cn/apache/incubator/zeppelin/0.5.6-incubating/zeppelin-0.5.6-incubating-bin-all.tgz
@@ -4428,7 +4436,7 @@ mv zeppelin-0.5.6-incubating-bin-all ./frameworks/zeppelin</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--48"><a class="anchor" href="#true--48"></a>12.2. 配置</h3>
+<h3 id="true--48"><a class="anchor" href="#true--48"></a>13.2. 配置</h3>
 <div class="listingblock">
 <div class="title">vi ./frameworks/zeppelin/conf/zeppelin-env.sh</div>
 <div class="content">
@@ -4456,7 +4464,7 @@ export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"</co
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--49"><a class="anchor" href="#true--49"></a>12.3. 启动</h3>
+<h3 id="true--49"><a class="anchor" href="#true--49"></a>13.3. 启动</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">./frameworks/zeppelin/bin/zeppelin.sh start</code></pre>
@@ -4464,7 +4472,7 @@ export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"</co
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--50"><a class="anchor" href="#true--50"></a>12.4. 测试</h3>
+<h3 id="true--50"><a class="anchor" href="#true--50"></a>13.4. 测试</h3>
 <div class="paragraph">
 <p><a href="http://bd:28081" class="bare">http://bd:28081</a></p>
 </div>
@@ -4472,10 +4480,10 @@ export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"</co
 </div>
 </div>
 <div class="sect1">
-<h2 id="trueothers"><a class="anchor" href="#trueothers"></a>13. others</h2>
+<h2 id="trueothers"><a class="anchor" href="#trueothers"></a>14. others</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="trueredis"><a class="anchor" href="#trueredis"></a>13.1. Redis</h3>
+<h3 id="trueredis"><a class="anchor" href="#trueredis"></a>14.1. Redis</h3>
 <div class="listingblock">
 <div class="title">Redis基本信息</div>
 <div class="content">
@@ -4484,7 +4492,7 @@ export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"</co
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--51"><a class="anchor" href="#true--51"></a>13.1.1. 安装</h4>
+<h4 id="true--51"><a class="anchor" href="#true--51"></a>14.1.1. 安装</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">docker pull redis
@@ -4493,7 +4501,7 @@ docker run --name some-redis -d redis</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--52"><a class="anchor" href="#true--52"></a>13.1.2. 使用</h4>
+<h4 id="true--52"><a class="anchor" href="#true--52"></a>14.1.2. 使用</h4>
 <div class="paragraph">
 <p><a href="https://github.com/xetorthio/jedis" class="bare">https://github.com/xetorthio/jedis</a><br>
 <a href="https://github.com/mrniko/redisson" class="bare">https://github.com/mrniko/redisson</a></p>
@@ -4503,10 +4511,10 @@ docker run --name some-redis -d redis</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="true--53"><a class="anchor" href="#true--53"></a>14. 综合实例：访客分析</h2>
+<h2 id="true--53"><a class="anchor" href="#true--53"></a>15. 综合实例：访客分析</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="true--54"><a class="anchor" href="#true--54"></a>14.1. 业务流程</h3>
+<h3 id="true--54"><a class="anchor" href="#true--54"></a>15.1. 业务流程</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/visit-analysis-flow.png" alt="visit analysis flow.png">
@@ -4527,7 +4535,7 @@ docker run --name some-redis -d redis</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--55"><a class="anchor" href="#true--55"></a>14.2. 涉及技术/框架</h3>
+<h3 id="true--55"><a class="anchor" href="#true--55"></a>15.2. 涉及技术/框架</h3>
 <div class="literalblock">
 <div class="content">
 <pre>Meteor、NodeJS 、Kafka、Spark Streaming、Redis、Mongo、ECharts</pre>
@@ -4535,7 +4543,7 @@ docker run --name some-redis -d redis</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--56"><a class="anchor" href="#true--56"></a>14.3. 环境</h3>
+<h3 id="true--56"><a class="anchor" href="#true--56"></a>15.3. 环境</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4563,9 +4571,9 @@ docker run --name some-redis -d redis</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--57"><a class="anchor" href="#true--57"></a>14.4. 如何运行</h3>
+<h3 id="true--57"><a class="anchor" href="#true--57"></a>15.4. 如何运行</h3>
 <div class="sect3">
-<h4 id="true--58"><a class="anchor" href="#true--58"></a>14.4.1. 参数列表</h4>
+<h4 id="true--58"><a class="anchor" href="#true--58"></a>15.4.1. 参数列表</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">Visit Analysis 1.0
@@ -4611,7 +4619,7 @@ Usage: Visit_Analysis [options]
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--59"><a class="anchor" href="#true--59"></a>14.4.2. 本地调试</h4>
+<h4 id="true--59"><a class="anchor" href="#true--59"></a>15.4.2. 本地调试</h4>
 <div class="paragraph">
 <p>运行 <code>run.mind.lab.visitanalysis.Startup</code> 加上参数</p>
 </div>
@@ -4629,7 +4637,7 @@ Usage: Visit_Analysis [options]
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--60"><a class="anchor" href="#true--60"></a>14.4.3. 部署</h4>
+<h4 id="true--60"><a class="anchor" href="#true--60"></a>15.4.3. 部署</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4683,15 +4691,15 @@ http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--61"><a class="anchor" href="#true--61"></a>14.5. 接口</h3>
+<h3 id="true--61"><a class="anchor" href="#true--61"></a>15.5. 接口</h3>
 <div class="sect3">
-<h4 id="true--62"><a class="anchor" href="#true--62"></a>14.5.1. 输入</h4>
+<h4 id="true--62"><a class="anchor" href="#true--62"></a>15.5.1. 输入</h4>
 <div class="paragraph">
 <p>kafka消息，消息格式为: <code>&lt;url&gt;|&lt;ipv4&gt;|&lt;cookies&gt;</code>, e.g. <code><a href="http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd" class="bare">http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</a></code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--63"><a class="anchor" href="#true--63"></a>14.5.2. 输出</h4>
+<h4 id="true--63"><a class="anchor" href="#true--63"></a>15.5.2. 输出</h4>
 <div class="paragraph">
 <p>Mongo 数据库，库名<code>visit</code>，有两张表：</p>
 </div>
@@ -4798,10 +4806,10 @@ http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="true--64"><a class="anchor" href="#true--64"></a>15. 综合实例：支付宝数据处理</h2>
+<h2 id="true--64"><a class="anchor" href="#true--64"></a>16. 综合实例：支付宝数据处理</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="true--65"><a class="anchor" href="#true--65"></a>15.1. 业务流程</h3>
+<h3 id="true--65"><a class="anchor" href="#true--65"></a>16.1. 业务流程</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/alipay-process-flow.png" alt="alipay process flow.png">
@@ -4825,7 +4833,7 @@ http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--66"><a class="anchor" href="#true--66"></a>15.2. 涉及技术/框架</h3>
+<h3 id="true--66"><a class="anchor" href="#true--66"></a>16.2. 涉及技术/框架</h3>
 <div class="literalblock">
 <div class="content">
 <pre>Meteor、NodeJS 、HDFS、Spark SQL、Hive、Zeppelin/Hue</pre>
@@ -4833,7 +4841,7 @@ http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--67"><a class="anchor" href="#true--67"></a>15.3. 环境</h3>
+<h3 id="true--67"><a class="anchor" href="#true--67"></a>16.3. 环境</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4858,15 +4866,15 @@ http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--68"><a class="anchor" href="#true--68"></a>15.4. 大数据处理脚本</h3>
+<h3 id="true--68"><a class="anchor" href="#true--68"></a>16.4. 大数据处理脚本</h3>
 <div class="paragraph">
 <p>这是一个很简单的脚本，大致逻辑是使用<code>hadoop fs -put</code>将文件上传到HDFS，再调用<code>spark-submit</code>提交执行作业。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--69"><a class="anchor" href="#true--69"></a>15.5. 如何运行</h3>
+<h3 id="true--69"><a class="anchor" href="#true--69"></a>16.5. 如何运行</h3>
 <div class="sect3">
-<h4 id="true--70"><a class="anchor" href="#true--70"></a>15.5.1. 参数列表</h4>
+<h4 id="true--70"><a class="anchor" href="#true--70"></a>16.5.1. 参数列表</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">Alipay Process 1.0
@@ -4882,7 +4890,7 @@ Usage: Alipay Process [options]
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--71"><a class="anchor" href="#true--71"></a>15.5.2. 部署</h4>
+<h4 id="true--71"><a class="anchor" href="#true--71"></a>16.5.2. 部署</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -4916,9 +4924,9 @@ Usage: Alipay Process [options]
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--72"><a class="anchor" href="#true--72"></a>15.6. 接口</h3>
+<h3 id="true--72"><a class="anchor" href="#true--72"></a>16.6. 接口</h3>
 <div class="sect3">
-<h4 id="true--73"><a class="anchor" href="#true--73"></a>15.6.1. 输入</h4>
+<h4 id="true--73"><a class="anchor" href="#true--73"></a>16.6.1. 输入</h4>
 <div class="paragraph">
 <p>Alipay账务数据，保存到HDFS</p>
 </div>
@@ -4935,14 +4943,14 @@ transfer	交易付款	2015062621001001860282310083	T200P1103148967888053	chenrg2
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--74"><a class="anchor" href="#true--74"></a>15.6.2. 输出</h4>
+<h4 id="true--74"><a class="anchor" href="#true--74"></a>16.6.2. 输出</h4>
 <div class="paragraph">
 <p>Hive 数据库，库名<code>alipay</code>，有两张表：.finance 账务流水表和 trade_amount_monthly 月交易额统计表</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="true-zeppelin"><a class="anchor" href="#true-zeppelin"></a>15.7. 使用zeppelin查询</h3>
+<h3 id="true-zeppelin"><a class="anchor" href="#true-zeppelin"></a>16.7. 使用zeppelin查询</h3>
 <div class="paragraph">
 <p>示例：</p>
 </div>
@@ -4956,14 +4964,14 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect1">
-<h2 id="true--75"><a class="anchor" href="#true--75"></a>16. 大数据实施建议</h2>
+<h2 id="true--75"><a class="anchor" href="#true--75"></a>17. 大数据实施建议</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>预研学习阶段先投入一到两名员工了解大数据的概念、基本环境配置的及使用，使用HDP搭建不少于3个节点的实验集群，导入部分生产数据做一些业务场景练习，
 在有实际业务输入时根据情况选择合适的技术、搭建测试生产集群，组建独立大数据团队。</p>
 </div>
 <div class="sect2">
-<h3 id="true--76"><a class="anchor" href="#true--76"></a>16.1. 集群环境</h3>
+<h3 id="true--76"><a class="anchor" href="#true--76"></a>17.1. 集群环境</h3>
 <div class="paragraph">
 <p>一般而言需要3个独立的集群</p>
 </div>
@@ -4995,7 +5003,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </table>
 </div>
 <div class="sect2">
-<h3 id="true--77"><a class="anchor" href="#true--77"></a>16.2. 大数据团队</h3>
+<h3 id="true--77"><a class="anchor" href="#true--77"></a>17.2. 大数据团队</h3>
 <div class="paragraph">
 <p>一般建议在3-12人左右，应用开发：系统运维：ETL的人员比可为 5:1:4</p>
 </div>
@@ -5004,9 +5012,9 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--78"><a class="anchor" href="#true--78"></a>16.3. 技术选型</h3>
+<h3 id="true--78"><a class="anchor" href="#true--78"></a>17.3. 技术选型</h3>
 <div class="sect3">
-<h4 id="true--79"><a class="anchor" href="#true--79"></a>16.3.1. 数据采集</h4>
+<h4 id="true--79"><a class="anchor" href="#true--79"></a>17.3.1. 数据采集</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5023,7 +5031,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--80"><a class="anchor" href="#true--80"></a>16.3.2. 数据处理</h4>
+<h4 id="true--80"><a class="anchor" href="#true--80"></a>17.3.2. 数据处理</h4>
 <div class="paragraph">
 <p><strong>如没有特殊情况推荐使用<code>Spark</code>作为处理引擎</strong></p>
 </div>
@@ -5042,7 +5050,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--81"><a class="anchor" href="#true--81"></a>16.3.3. 数据存储</h4>
+<h4 id="true--81"><a class="anchor" href="#true--81"></a>17.3.3. 数据存储</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5067,7 +5075,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect3">
-<h4 id="true--82"><a class="anchor" href="#true--82"></a>16.3.4. 数据可视化</h4>
+<h4 id="true--82"><a class="anchor" href="#true--82"></a>17.3.4. 数据可视化</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5087,7 +5095,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 </div>
 <div class="sect2">
-<h3 id="true--83"><a class="anchor" href="#true--83"></a>16.4. 请对以下技术保持关注</h3>
+<h3 id="true--83"><a class="anchor" href="#true--83"></a>17.4. 请对以下技术保持关注</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -5113,7 +5121,7 @@ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-04-27 22:03:21
+Last updated 2016-05-06 08:25:50
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

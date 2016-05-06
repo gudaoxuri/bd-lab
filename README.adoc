@@ -63,13 +63,13 @@ CAUTION: 生产环境下所有未经官方源下载的文件都要做签名校�
 |data\banks.csv | 模拟银行数据
 |===
 
-=== 环境准备
+== 环境准备
 
 硬件要求：内存：>=4G，硬盘：>=20G，网络畅通 +
 系统要求：Centos6.x，开启SSH，推荐使用Docker，也可使用实体机或虚拟机（Vmware、Virtualbox或Hyper-V） +
 基本环境：安装完成 JDK8、Scala2.10.x，MySQL、Mongo
 
-==== 使用Docker创建环境（推荐/可选）
+=== 使用Docker创建环境（推荐/可选）
 
 如您使用的是实体机或虚拟机请忽略此操作。
 
@@ -153,7 +153,7 @@ docker run --name bd-lab -h bd -d \
 .Docker使用简明教程
 http://gudaoxuri.github.io/Docker_ABC/
 
-==== 使用Virtual box创建环境（可选）
+=== 使用Virtual box创建环境（可选）
 
 * 下载CentOS6.x
 
@@ -278,7 +278,7 @@ chmod 777 /share
 /etc/init.d/smb start
 ----
 
-==== 基本环境创建
+=== 基本环境创建
 
 SSH到实验环境
 
@@ -310,4 +310,4 @@ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 chmod 0600 ~/.ssh/authorized_keys
 ----
 
-IMPORTANT: 如无特殊说明后续操作都使用user账号
+IMPORTANT: 如无特殊说明后续操作都使用`user`账号
