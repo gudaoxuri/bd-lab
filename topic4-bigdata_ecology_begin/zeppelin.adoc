@@ -1,0 +1,57 @@
+== Zeppelin
+
+****
+此主题介绍Zeppelin的安装、配置及基础使用。
+****
+
+[NOTE]
+.Zeppelin基本信息
+----
+官网：https://zeppelin.incubator.apache.org/
+----
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.cnnic.cn/apache/incubator/zeppelin/0.5.6-incubating/zeppelin-0.5.6-incubating-bin-all.tgz
+tar -zxf zeppelin-0.5.6-incubating-bin-all.tgz
+rm -rf zeppelin-0.5.6-incubating-bin-all.tgz
+mv zeppelin-0.5.6-incubating-bin-all ./frameworks/zeppelin
+----
+
+=== 配置
+
+[source,bash]
+.vi ./frameworks/zeppelin/conf/zeppelin-env.sh
+----
+export ZEPPELIN_PORT=28081
+
+export SPARK_HOME=/opt/workspaces/frameworks/spark
+export HADOOP_CONF_DIR=/opt/workspaces/frameworks/hadoop
+export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"
+----
+
+[NOTE]
+====
+https://zeppelin.incubator.apache.org/docs/0.5.6-incubating/install/install.html +
+https://zeppelin.incubator.apache.org/docs/0.5.6-incubating/interpreter/spark.html
+====
+
+=== 启动
+
+[source,bash]
+----
+./frameworks/zeppelin/bin/zeppelin.sh start
+----
+
+=== 测试
+
+http://bd:28081
+
+
+
+
+
+
+

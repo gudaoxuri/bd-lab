@@ -1,0 +1,94 @@
+== Kafka
+
+****
+此主题介绍Kafka的安装、配置及基础使用。
+****
+
+[quote,infoq.com]
+____
+Kafka介绍 +
+http://www.infoq.com/cn/articles/kafka-analysis-part-1
+____
+
+[NOTE]
+.Kafka基本信息
+----
+官网：http://kafka.apache.org/
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+# 创建Kafka数据目录
+mkdir data/kafka
+# 创建Kafka日志目录
+mkdir logs/kafka
+----
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.cnnic.cn/apache/kafka/0.8.2.2/kafka_2.10-0.8.2.2.tgz
+tar -zxf kafka_2.10-0.8.2.2.tgz
+rm -rf kafka_2.10-0.8.2.2.tgz
+mv kafka_2.10-0.8.2.2 ./frameworks/kafka
+----
+
+=== 配置(伪分布式)
+
+[source,bash]
+.vi ./frameworks/kafka/config/server.properties
+----
+# 设置如下参数：
+broker.id=0
+port=9092
+# 对外主机名
+advertised.host.name=<Docker对外IP>
+# 数据目录
+log.dirs=/opt/workspaces/data/kafka
+# 连接ZK
+zookeeper.connect=localhost:2181
+----
+
+TIP: 当您有多块网卡或使用特殊的网络设置导致Kafka启动时使用的IP与对外暴露的IP不同时需要指定`advertised.host.name`为您期望使用的外网IP
+
+TIP: `log.dirs`的解释为`A comma seperated list of directories under which to store log files`，这里所谓的日志文件指的是Kafka的消息持久化文件，并不是一般意义的运行日志
+
+[source,bash]
+.vi ./frameworks/kafka/config/log4j.properties
+----
+# 设置日志目录
+kafka.logs.dir=/opt/workspaces/logs/kafka
+----
+
+=== 启动与停止
+
+[source,bash]
+----
+nohup ./frameworks/kafka/bin/kafka-server-start.sh ./frameworks/kafka/config/server.properties >/dev/null 2>&1 &
+----
+
+=== 测试
+
+[source,bash]
+----
+./frameworks/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+./frameworks/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test 
+> This is a message
+> This is another message
+# 在另个窗口输入
+./frameworks/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+> This is a message
+> This is another message
+----
+ 
+
+
+
+
+
+

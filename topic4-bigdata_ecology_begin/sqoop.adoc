@@ -1,0 +1,78 @@
+== Sqoop
+
+****
+此主题介绍Sqoop的安装、配置及基础使用。
+****
+
+[NOTE]
+.Sqoop基本信息
+----
+官网：http://sqoop.apache.org/
+官方文档：http://sqoop.apache.org/docs/1.4.6/SqoopUserGuide.html
+----
+
+TIP: Sqoop有两大版本，Sqoop稳定，Sqoop2目前问题比较多，以下使用Sqoop
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirror.bit.edu.cn/apache/sqoop/1.4.6/sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
+tar -zxf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
+rm -rf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
+mv sqoop-1.4.6.bin__hadoop-2.0.4-alpha ./frameworks/sqoop
+----
+
+=== 配置
+
+[source,bash]
+.vi ~/.profile
+----
+export SQOOP_HOME=/opt/workspaces/frameworks/sqoop
+----
+
+ source ~/.profile
+
+[source,bash]
+.vi ./frameworks/sqoop/conf/sqoop-env.sh
+----
+export HADOOP_COMMON_HOME=/opt/workspaces/frameworks/hadoop
+export HADOOP_MAPRED_HOME=/opt/workspaces/frameworks/hadoop
+export HIVE_HOME=/opt/workspaces/frameworks/hive
+----
+
+[source,bash]
+.下载mysql驱动
+----
+wget -P ./frameworks/sqoop/lib http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar
+----
+
+=== 测试
+
+[source,bash]
+----
+./frameworks/sqoop/bin/sqoop version
+----
+
+=== 使用
+
+[source,bash]
+.从MySQL数据库导入数据
+----
+./frameworks/sqoop/bin/sqoop import --connect jdbc:mysql://<host>:<port>/hive \
+ --username hive --password hive \
+ --table ROLES \
+ --where 1=1 \
+ --hive-import --hive-table hive_role
+
+# 如何要启用增量导入需要加上如下参数 
+--incremental lastmodified --check-column <source field> --last-value ''
+----
+
+NOTE: 增量的字段必须是`timestamp`或`date/datetime`
+
+
+
+
+
+

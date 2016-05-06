@@ -1,0 +1,313 @@
+== 概要说明
+
+****
+本工程为大数据培训的指导教程，包含了培训实践各个环节的说明及相关代码。
+****
+
+=== 课程概要
+|===
+|名称 | 内容
+
+|第一天上午|
+|元宝铺架构分享 | 
+|大数据总揽 | 介绍当前大数据的基本情况
+|环境准备 | 为后续实践准备基础环境
+|第一天下午|
+|Spark入门 | 介绍Spark框架的基本概念
+|Scala入门 | 介绍Scala语言的基础使用
+|Hadoop安装使用 | 动手实践Hadoop的安装、配置及基础使用
+|Spark安装使用 | 动手实践Spark的standalone安装、配置及基础使用
+|案例分析：ybMAP | 介绍元宝铺数据处理遇到的问题及如何解决
+|第二天上午|
+|Zookeeper安装使用 | 动手实践Zookeeper的安装、配置及基础使用
+|HBase安装使用 | 动手实践HBase的安装、配置及基础使用
+|Hive安装使用 | 动手实践Hive的安装、配置及基础使用
+|Kafka安装使用 | 动手实践Kafka的安装、配置及基础使用
+|Sqoop安装使用 | 动手实践Sqoop的安装、配置及基础使用
+|Zeppelin安装使用 | 动手实践Zeppelin的安装、配置及基础使用
+|生产环境说明 | 介绍用Ambari+HDP搭建生产环境，使用Hue、Kylin做分析
+|案例分析：垂直行业数据运营平台 | 以4S店行业为入口分析垂直行业数据运营平台的架构及流程
+|第二天下午|
+|综合实例：访客分析 | 以访客分析为例子综合使用Kafka、Spark Streaming、Redis、Mongo等技术框架
+|综合实例：支付宝数据处理 | 以支付宝数据处理为例子综合使用HDFS、Spark SQL、Hive、Zeppelin/Hue等技术框架
+|===
+
+=== 资源说明
+
+实验需要的资源列表，因我朝网络管制，故预先下载备用。
+
+TIP: 网盘下载地址： http://pan.baidu.com/s/1dEJ7agT
+
+CAUTION: 生产环境下所有未经官方源下载的文件都要做签名校验
+
+|===
+|名称 | 说明
+
+|tools\DockerToolbox-1.11.0.exe | Windows的Docker安装程序
+|tools\DockerToolbox-1.11.0.pkg | Mac的Docker安装程序
+|tools\AsciidocFX_Windows_No_JRE.exe | 此文档的撰写工具
+|images\scala_2.10_image.tar | Docker镜像，本实验的基础环境
+|images\mysql_image.tar | Docker MySQL镜像
+|images\mongo_image.tar | Docker Mongo镜像
+|images\bd-lab_image.tar | Docker镜像，本实验最终成果
+|frameworks\hadoop-2.7.2.tar.gz | Hadoop压缩包
+|frameworks\spark-1.6.1-bin-hadoop2.6.tgz | Spark Hadoop2.6预编译包
+|frameworks\apache-hive-1.2.1-bin.tar.gz | Hive预编译包
+|frameworks\hbase-1.2.1-bin.tar.gz | HBase预编译包
+|frameworks\kafka_2.10-0.8.2.2.tgz | Kafka预编译包
+|frameworks\zookeeper-3.4.8.tar.gz | Zookeeper预编译包
+|frameworks\sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz | Sqoop预编译包
+|frameworks\zeppelin-0.5.6-incubating-bin-all.tgz | Zeppelin预编译包
+|frameworks\mysql-connector-java-5.1.36.jar | Mysql JDBC驱动
+|data\r4ZBzEh4Fu8imdju5_0.35396679607219994.out | 模拟支付宝数据
+|data\banks.csv | 模拟银行数据
+|===
+
+=== 环境准备
+
+硬件要求：内存：>=4G，硬盘：>=20G，网络畅通 +
+系统要求：Centos6.x，开启SSH，推荐使用Docker，也可使用实体机或虚拟机（Vmware、Virtualbox或Hyper-V） +
+基本环境：安装完成 JDK8、Scala2.10.x，MySQL、Mongo
+
+==== 使用Docker创建环境（推荐/可选）
+
+如您使用的是实体机或虚拟机请忽略此操作。
+
+* 下载Docker
+
+Linux直接使用包管理工具安装（Centos6及以下版本安装比较麻烦），
+Windows或Mac使用`Docker toolbox`安装（已在资源列表中）
+详细参见： https://docs.docker.com/
+
+* 添加镜像
+
+从官方仓库安装：
+
+[source,bash]
+----
+# 下载scala基础镜像
+docker pull gudaoxuri/scala_2.10
+# 下载mysql镜像
+docker pull mysql
+# 下载Mongo镜像
+docker pull mongo
+----
+
+如网络过慢可使用资源列表中已下载的镜像安装：
+
+[source,bash]
+----
+# 从本地添加scala基础镜像
+docker load -i <your path>/images/scala_2.10_image.tar
+# 从本地添加mysql镜像
+docker load -i <your path>/images/mysql_image.tar
+# 从本地添加mongo镜像
+docker load -i <your path>/images/mongo_image.tar
+----
+
+* 创建容器
+
+[source,bash]
+----
+# 创建mysql容器，开放3306端口，用户名root，密码123456
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -d mysql
+# 创建mongo容器，开放27017端口，无需认证
+docker run --name mongo -p 27017:27017 -d mongo
+# 创建scala基础容器，开放大数据服务需要的几个重要端口
+docker run --name bd-lab -h bd -d \
+     -p 2181:2181 \
+     -p 6066:6066 \
+     -p 7077:7077 \
+     -p 8088:8088 \
+     -p 8041:8041 \
+     -p 19888:19888 \
+     -p 60010:60010 \
+     -p 60030:60030 \
+     -p 4040:4040 \
+     -p 8080:8080 \
+     -p 8081:8081 \
+     -p 9000:9000 \
+     -p 7203:7203 \
+     -p 9092:9092 \
+     -p 50010:50010 \
+     -p 50070:50070 \
+     -p 50075:50075 \
+     -p 10000:10000 \
+     -p 28081:28081 \
+     -p 222:22 \
+     -v /c/Users/i/docker_data/bd-lab:/opt/res \
+     gudaoxuri/scala_2.10
+----
+
+[IMPORTANT]
+.容器说明
+====
+`gudaoxuri/scala_2.10`镜像开放了SSH服务，用户名root，密码123456，端口号222 +
+`-v`表示添加数据映射，此处用于获取宿主机是已下载的框架包。对于Windows和Mac宿主机的路径有一定要求，详见 https://docs.docker.com/engine/userguide/containers/dockervolumes/#mount-a-host-directory-as-a-data-volume 
+====
+
+[NOTE]
+后续环境使用`docker`容器，如无特殊说明所使用容器均基于`gudaoxuri/scala_2.10`镜像。
+
+[TIP]
+.Docker使用简明教程
+http://gudaoxuri.github.io/Docker_ABC/
+
+==== 使用Virtual box创建环境（可选）
+
+* 下载CentOS6.x
+
+ http://mirrors.163.com/centos/6.7/isos/x86_64/CentOS-6.7-x86_64-minimal.iso
+
+* 安装CentOS到Virtual box
+
+[IMPORTANT]
+.注意事项
+====
+* 网络使用`网桥`模式
+* 选择中文（避免乱码）
+* 主机名使用`bd`
+* IP及DNS安装完成后再配置
+====
+
+* 安装完成，配置网络
+
+[source,bash]
+.vi /etc/sysconfig/network-scripts/ifcfg-eth0
+----
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=<ip>
+NETMASK=<mask>
+GATEWAY=<getway>
+----
+
+[source,bash]
+----
+ifup eth0
+----
+
+[source,bash]
+.vi /etc/resolv.conf
+----
+nameserver 180.76.76.76
+nameserver 8.8.8.8
+----
+
+[source,bash]
+.测试
+----
+ifconfig
+ping www.baidu.com
+----
+
+* 安装必须的工具
+
+[source,bash]
+----
+# 测试环境，可以关闭防火墙
+chkconfig iptables off
+service iptables stop
+
+yum install -y wget
+
+# 安装java
+wget -P /opt/env/ --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie"  http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.tar.gz
+tar -xzf /opt/env/jdk-8u60-linux-x64.tar.gz -C /opt/env/
+rm -rf /opt/env/jdk-8u60-linux-x64.tar.gz
+mv /opt/env/jdk1.8.0_60 /opt/env/java
+echo "export JAVA_HOME=/opt/env/java" >> /etc/profile
+
+# 安装Scala
+wget -P /opt/env/ http://downloads.typesafe.com/scala/2.10.6/scala-2.10.6.tgz
+tar -xzf /opt/env/scala-2.10.6.tgz -C /opt/env/
+rm -rf /opt/env/scala-2.10.6.tgz
+mv /opt/env/scala-2.10.6 /opt/env/scala
+echo "export SCALA_HOME=/opt/env/scala" >> /etc/profile
+
+echo 'export PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin' >> /etc/profile
+source /etc/profile
+
+# 安装MySQL
+yum install -y mysql-server mysql mysql-devel
+service mysqld start
+# mysqladmin -u root password 123456
+mysql -u root -p
+grant all on *.* to'root'@'%' identified by '123456';
+flush privileges;
+
+# 安装Mongo
+vi /etc/yum.repos.d/mongodb-org-3.2.repo
+  [mongodb-org-3.2]
+  name=MongoDB Repository
+  baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.2/x86_64/
+  gpgcheck=1
+  enabled=1
+  gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
+
+yum install -y mongodb-org
+
+vi /etc/mongod.conf
+  bind_ip = 0.0.0.0
+
+service mongod start
+----
+
+* 文件夹共享
+----
+vi /etc/selinux/config
+   SELLINUX=disabled
+
+yum install -y samba
+vi /etc/samba/smb.conf
+    # 开启匿名访问
+    security = share
+    # 修改访问目录
+    [public]
+    comment = Public Stuff
+    path = /share
+    availabe = yes
+    browseable = yes
+    public = yes
+    writable = yes
+    printable = no
+    write list = +staff
+
+mkdir /share
+chmod 777 /share
+/etc/init.d/smb start
+----
+
+==== 基本环境创建
+
+SSH到实验环境
+
+[source,bash]
+----
+# 创建用户user,密码123456
+adduser user
+passwd user
+mkdir -p /opt/workspaces/
+chown user: /opt/workspaces/
+
+# 进入user账号
+su - user
+
+# 切换到工作空间
+cd /opt/workspaces
+# 创建各框架lib目录
+mkdir frameworks
+# 创建各框架数据目录
+mkdir data
+# 创建各框架日志目录
+mkdir logs
+# 创建应用包目录
+mkdir apps
+
+# 创建SSH免密钥登录
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
+----
+
+IMPORTANT: 如无特殊说明后续操作都使用user账号

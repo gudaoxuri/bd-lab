@@ -1,0 +1,185 @@
+== 综合实例：访客分析
+
+=== 业务流程
+
+[ditaa,file="images/visit-analysis-flow.png"]
+--
+    +--------+   +-------+    +---------+
+    | Client |---|       |--->|cBLU     |
+    |  Agent |   | Kafka |    |  Spark  |
+    +--------+   |       |    |Streaming|
+    |  View  |   |       |    |         |
+    +---+----+   +-------+    +---------+
+        ^                          |
+        | subscribe         Update |
+        |         +-----+          |
+        +-------- |{s}  |<---------+
+                  |Mongo|
+                  +-----+ 
+--
+
+
+. 客户端代理程序获取访客行为并将行为保存到MQ中
+. 分析程序从MQ中获取数据进行分析并将结果保存到数据库
+. 展示程序实时显示行为分析结果
+
+=== 涉及技术/框架
+
+  Meteor、NodeJS 、Kafka、Spark Streaming、Redis、Mongo、ECharts
+  
+=== 环境
+
+. JDK >=1.8
+. Scala >=2.10.x
+. NodeJS >=4.x
+. Spark >=1.6.x
+. Kafka 0.8.2.2
+. Redis >=3.x
+. Mongo >=3.x
+
+=== 如何运行
+
+==== 参数列表
+
+[source,bash]
+----
+Visit Analysis 1.0
+Usage: Visit_Analysis [options]
+
+  -s <value> | --spark_master <value>
+        spark master address , e.g. local[2]
+  -t <value> | --batch_duration <value>
+        spark streaming batch duration (s) , default 10
+  --checkpoint_address <value>
+         checkpoint address , e.g. hdfs://127.0.0.1:9000/tmp/checkpoint defalut /tmp/checkpoint
+  -z <value> | --zk_hosts <value>
+        zookeeper hosts , e.g. 127.0.0.1:2181
+  --kafka_group <value>
+        kafka group name ,default default
+  --kafka_topic <value>
+        kafka topic name , e.g. topic1
+  --mongo_address <value>
+        mongo address , e.g. localhost:27017
+  --mongo_db <value>
+        mongo db , myDb
+  --redis_address <value>
+        redis address , e.g. 127.0.0.1:6379
+  --redis_db <value>
+        redis db , default 0
+  --ip_path <value>
+        ip path , e.g. /opt/ip.bat
+----
+
+示例：
+
+[source,bash]
+----
+-s local[2]
+-z 192.168.99.100:2181
+--kafka_topic test
+--mongo_address 192.168.99.100:27017
+--mongo_db visit
+--redis_address 192.168.99.100:6379
+--ip_path C:\\data\\Enjoy_Projects\\bd-lab\\topic10-example-visit_analysis\\src\\main\\resources\\ip.dat
+----
+
+==== 本地调试
+
+运行 `run.mind.lab.visitanalysis.Startup` 加上参数
+
+IMPORTANT: 调试时打开`pom.xml`中的`<spark.scope>compile</spark.scope>`
+
+==== 部署
+
+. 注释`pom.xml`中的`<spark.scope>compile</spark.scope>`
+. `mvn assembly:assembly`
+. 上传`target/visit-analysis-0.0.1-jar-with-dependencies.jar`及`/src/main/resources/ip.dat`到服务器
+. 执行`spark-submit --class run.mind.lab.visitanalysis.Startup <some path>/visit-analysis-0.0.1-jar-with-dependencies.jar <args>`
+
+IMPORTANT: ip.dat文件必须是所有Spark工作节点都可以访问的，可以放在NAS中
+
+示例
+
+[source,bash]
+----
+./frameworks/spark/bin/spark-submit \
+   --class run.mind.lab.visitanalysis.Startup \
+   --master local[2] \
+   --executor-memory 512M \
+   /opt/workspaces/apps/visit_analysis/visit-analysis-0.0.1-jar-with-dependencies.jar \
+    -s local[2] \
+    -z bd:2181 \
+    --kafka_topic test \
+    --mongo_address 192.168.99.100:27017 \
+    --mongo_db visit \
+    --redis_address 192.168.99.100:6379 \
+    --ip_path /opt/workspaces/apps/visit_analysis/ip.dat
+
+./frameworks/kafka/bin/kafka-console-producer.sh --topic test --broker-list bd:9092
+http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd
+----
+
+=== 接口
+
+==== 输入
+
+kafka消息，消息格式为: `<url>|<ipv4>|<cookies>`, e.g. `http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd`
+
+==== 输出
+
+Mongo 数据库，库名`visit`，有两张表：
+
+.statistics 统计表
+|===
+|字段名 | 类型 | 说明
+
+|category
+|string
+|统计类型，目前三个，`host`表示此记录是统计访问host的，`province`表示此记录按省份统计，``为空表示统计的是不区分类型的访问数
+
+|clue
+|string
+|追踪值，是统计类型下的细分值
+
+|date
+|long
+|日期，格式`yyyyMMdd`
+
+|count
+|long
+|不同统计维度下的访问数
+|===
+
+例如，收到一条`http://www.baidu.com|122.255.21.25|wfjosms=sfwtksdksetsd`，则会生成如下记录：
+
+[source,json]
+----
+{ "_id" : xx , "category" : "" , "clue" : "" , "date" : 0 , "count" : 1} // 总访问数1个
+{ "_id" : xx , "category" : "host" , "clue" : "www.baidu.com" , "date" : 0 , "count" : 1} // 百度host的总访问数1个
+{ "_id" : xx  , "category" : "host" , "clue" : "www.baidu.com" , "date" : 20160416 , "count" : 1} // 20160416这天百度host的总访问数1个
+{ "_id" : xx, "category" : "province" , "clue" : "斯里兰卡" , "date" : 0 , "count" : 1} // ip为斯里兰卡（国外到不了省）的总访问数1个
+{ "_id" : xx, "category" : "province" , "clue" : "斯里兰卡" , "date" : 20160416 , "count" : 1} // 20160416这天ip为斯里兰卡（国外到不了省）的总访问数1个
+----
+
+NOTE: `date`会按日期自动增加
+
+.logs 日志表
+|===
+|字段名 | 类型 | 说明
+
+|url
+|string
+|请求的url
+
+|ip
+|string
+|请求的ip
+
+|cookies
+|string
+|请求的cookies
+
+|time
+|timestamp
+|请求时间
+|===

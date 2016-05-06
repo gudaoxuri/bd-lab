@@ -1,0 +1,11 @@
+== Scala入门
+
+[quote,learnxinyminutes.com]
+____
+https://learnxinyminutes.com/docs/scala/
+____
+
+
+++++
+<script src="https://gist.github.com/gudaoxuri/68667bfa9dcbb219b121f49227e0f757.js"></script>
+++++

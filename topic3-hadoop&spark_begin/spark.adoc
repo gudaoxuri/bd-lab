@@ -1,0 +1,269 @@
+== Spark
+
+****
+此主题介绍Spark的安装、配置及基础使用。
+****
+
+[quote,ibm.com]
+____
+Spark介绍 +
+http://www.ibm.com/developerworks/cn/opensource/os-spark/
+____
+
+[NOTE]
+.Spark基本信息
+----
+官网：http://spark.apache.org/
+官方教程：http://spark.apache.org/docs/latest/programming-guide.html
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+# 创建Spark数据目录
+mkdir data/spark
+# 创建Spark日志目录
+mkdir logs/spark
+----
+
+[TIP]
+.官方教程
+http://spark.apache.org/docs/latest/spark-standalone.html
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.hust.edu.cn/apache/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz
+tar -zxf spark-1.6.1-bin-hadoop2.6.tgz
+rm -rf spark-1.6.1-bin-hadoop2.6.tgz
+mv spark-1.6.1-bin-hadoop2.6 ./frameworks/spark
+----
+
+=== 配置(伪分布式)
+
+[source,bash]
+.vi ./frameworks/spark/conf/spark-env.sh
+----
+export SPARK_MASTER_IP=bd
+export SPARK_MASTER_PORT=7077
+export MASTER=spark://${SPARK_MASTER_IP}:${SPARK_MASTER_PORT}
+# 指定Spark数据目录
+export SPARK_LOCAL_DIRS=/opt/workspaces/data/spark/
+# 指定Spark日志目录
+export SPARK_LOG_DIR=/opt/workspaces/logs/spark/
+# 指定JDK目录
+export JAVA_HOME=/opt/env/java
+# 指定Scala目录
+export SCALA_HOME=/opt/env/scala
+----
+
+=== 启动与停止
+
+[source,bash]
+----
+./frameworks/spark/sbin/start-all.sh
+----
+
+=== 测试
+
+[source,bash]
+----
+# 执行圆周率计算示例
+./frameworks/spark/bin/run-example  org.apache.spark.examples.SparkPi
+
+./frameworks/spark/bin/spark-submit \
+  --class org.apache.spark.examples.SparkPi \
+  --master spark://bd:6066\
+  --deploy-mode cluster \
+  --driver-memory 512M \
+  --executor-memory 256M \  #如果运行出错请改大些
+  ./frameworks/spark/lib/spark-examples-1.6.1-hadoop2.6.0.jar \
+  1000
+----
+
+=== Word Count
+
+TIP: http://spark.apache.org/docs/latest/quick-start.html
+
+[source.scala]
+.Word Count
+----
+./frameworks/spark/bin/spark-shell
+
+// 基础版
+val textFile = sc.textFile("./frameworks/spark/README.md")
+val words = textFile.flatMap(line => line.split(" "))
+val exchangeVal = words.map(word => (word,1))
+val count = exchangeVal.reduceByKey((a,b) => a + b)
+count.collect
+
+// 优化版
+sc.textFile("./frameworks/spark/README.md").flatMap(_.split(" ")).map((_,1)).reduceByKey(_ + _).collect
+
+// 带排序
+sc.textFile("./frameworks/spark/README.md").flatMap(_.split(" ")).map((_,1)).reduceByKey(_ + _).map(_.swap).sortByKey(false).map(_.swap).collect
+
+// 最终版
+val wordR="""\w+""".r
+sc.textFile("./frameworks/spark/README.md").flatMap(_.split(" ")).filter(wordR.pattern.matcher(_).matches).map((_,1)).reduceByKey(_ + _).map(_.swap).sortByKey(false).map(_.swap).saveAsTextFile("hdfs://bd:9000/wordcount")
+
+----
+
+TIP: 可以访问 http://<host>:8080 查看作业
+
+=== 参数说明
+
+* 在哪配置：
+
+Spark properties （Spark属性）在应用程序中通过`SparkConf` 对象设置，或通过Java系统属性设置。 +
+Environment variables （环境变量）指定各节点的设置，如IP地址、端口，配置文件在conf/spark-env.sh中。 +
+Logging （日志）可以通过log4j.properties配置日志。
+
+* Spark properties
+
+[source,scala]
+.在代码中指定配置
+----
+val conf = new SparkConf()
+             // 指定使用2个本地线程来运行，本地模式下，我们可以使用n个线程（n >= 1），但在像Spark Streaming这样的场景下，我们可能需要多个线程
+             .setMaster("local[2]")
+             .setAppName("CountingSheep")
+val sc = new SparkContext(conf)
+----
+
+[source,scala]
+.在脚本中指定配置
+----
+./bin/spark-submit --name "My app" --master local[4] --conf spark.eventLog.enabled=false
+  --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps" myApp.jar
+----
+
+.常用配置
+|===
+|属性名称 | 默认值 | 说明
+
+|spark.app.name	|  | Spark应用的名字
+|spark.driver.cores	| 1	| 在cluster模式下运行driver进程的核数
+|spark.driver.memory	| 1g	| driver进程可以用的内存总量（如：1g，2g），client模式下无效果，必须要在命令行里用 –driver-memory 或者在默认属性配置文件里设置
+|spark.executor.memory	| 1g	| 单个executor使用的内存总量（如，2g，8g）
+|spark.master | | 集群管理器URL
+|===
+
+* Environment variables
+
+环境变量在${SPARK_HOME}/conf/spark-env.sh脚本中设置
+
+.常用配置
+|===
+|模式|属性名称 | 默认值 | 说明
+
+||JAVA_HOME	|  | Java安装目录
+||SCALA_HOME	|  | Scala安装目录
+||SPARK_LOCAL_IP	|  |本地绑定的IP
+||SPARK_LOG_DIR	|${SPARK_HOME}/logs  |日志目录
+|standalone|SPARK_MASTER_IP	| （当前IP） | Master IP
+|standalone|SPARK_MASTER_PORT	| 7077（6066） | Master 端口
+|standalone|MASTER	|  | 默认Master URL
+|standalone|SPARK_WORKER_CORES	| 所有 |每个节点使用的CPU core上限
+|standalone|SPARK_WORKER_MEMORY	| 本节点所有内存减去1GB  | 每个节点使用的内存上限
+|standalone|SPARK_WORKER_INSTANCES	| 1 | 每个节点启动的worker实例个数
+|standalone|SPARK_WORKER_PORT	| 随机 | Worker绑定的端口
+|===
+
+NOTE: 如果你的slave节点性能非常强劲，可以把`SPARK_WORKER_INSTANCES`设为大于1；相应的，需要设置SPARK_WORKER_CORES参数限制每个worker实例使用的CPU个数，否则每个worker实例都会使用所有的CPU。
+
+* Logging
+
+日志在${SPARK_HOME}/conf/log4j.properties中设置
+
+* Hadoop集群配置
+
+使用HDFS时需要从Hadoop中复制`hdfs-site.xml、 core-site.xml`到Spark的classpath中
+
+TIP: http://spark.apache.org/docs/latest/configuration.html
+
+=== 资源调度
+
+standalone目前只支持简单的先进先出（FIFO）调度器。这个调度器可以支持多用户，你可以控制每个应用所使用的最大资源。默认情况下，Spark应用会申请集群中所有的CPU。
+
+[source,scala]
+.在代码中限制资源
+----
+val conf = new SparkConf()
+             .setMaster(...)
+             .setAppName(...)
+             .set("spark.cores.max", "10")
+val sc = new SparkContext(conf)
+----
+
+[source,scala]
+.在配置文件`spark-env.sh`中限制资源
+----
+export SPARK_MASTER_OPTS="-Dspark.deploy.defaultCores=<value>"
+----
+
+=== 性能调优
+
+TIP: http://spark.apache.org/docs/latest/tuning.html
+
+=== 硬件配置
+
+每个节点： +
+* 4-8块磁盘 +
+* 8G以上内存 +
+* 千兆网卡 +
+* 8-16核CPU +
+
+至少3个节点
+
+TIP: http://spark.apache.org/docs/latest/hardware-provisioning.html
+
+=== 整合Hive
+
+* 在`spark-env.sh`中添加配置项
+
+ # Hive目录
+ export HIVE_HOME=$HIVE_HOME
+
+[IMPORTANT]
+.SPARK_CLASSPATH
+====
+有些教程中说要添加 +
+`export SPARK_CLASSPATH=$HIVE_HOME/lib/mysql-connector-java-x.jar:$SPARK_CLASSPATH` +
+但目前版本不需要此配置，并且添加上去会导致`zeppelin`运行出错: +
+org.apache.spark.SparkException: Found both spark.driver.extraClassPath and SPARK_CLASSPATH. Use only the former.
+====
+
+* 复制Hive的几个配置文件
+
+ cp ./frameworks/hive/conf/hive-site.xml ./frameworks/spark/conf
+ cp ./frameworks/hive/conf/hive-log4j.properties ./frameworks/spark/conf
+ 
+* 启动thriftserver，用于对外提供JDBC服务
+ 
+ ./frameworks/spark/sbin/start-thriftserver.sh
+ 
+* 测试连接
+
+ ./frameworks/spark/bin/beeline
+ !connect jdbc:hive2://bd:10000
+ show tables;
+
+
+[NOTE]
+ .Spark 架构设计
+----
+http://spark-internals.books.yourtion.com/index.html +
+此文写得挺详细，由于撰写时间较早，与新版本有出入（比如Shuffle Manager现在默认是Sort-based），但不影响对Spark的整体理解。
+----
+ 
+
+
+
+
+
+

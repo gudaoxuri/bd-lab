@@ -1,0 +1,29 @@
+== others
+
+=== Redis
+
+[NOTE]
+.Redis基本信息
+----
+官网：http://redis.io/
+数据类型：http://blog.csdn.net/gaogaoshan/article/details/41039581
+----
+
+==== 安装
+
+[source,bash]
+----
+docker pull redis
+docker run --name some-redis -d redis
+----
+
+==== 使用
+
+https://github.com/xetorthio/jedis +
+https://github.com/mrniko/redisson
+
+
+
+
+
+

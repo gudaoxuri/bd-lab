@@ -1,0 +1,108 @@
+== HBase
+
+****
+此主题介绍HBase的安装、配置及基础使用。
+****
+
+[quote,microsoft.com]
+____
+HBase介绍 +
+https://blogs.msdn.microsoft.com/apgcdsd/2015/03/26/hbase/
+____
+
+[NOTE]
+.HBase基本信息
+----
+官网：http://hbase.apache.org/
+官方文档：http://hbase.apache.org/book.html
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+# 创建HBase日志目录
+mkdir logs/hbase
+----
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.cnnic.cn/apache/hbase/1.2.1/hbase-1.2.1-bin.tar.gz
+tar -zxf hbase-1.2.1-bin.tar.gz
+rm -rf hbase-1.2.1-bin.tar.gz
+mv hbase-1.2.1 ./frameworks/hbase
+----
+
+=== 配置(完全分布式)
+
+[source,bash]
+.vi ./frameworks/hbase/conf/hbase-env.sh
+----
+export JAVA_HOME=/opt/env/java
+export HBASE_LOG_DIR=/opt/workspaces/logs/hbase
+export HBASE_MANAGES_ZK=false
+----
+
+[source,bash]
+.vi ./frameworks/hbase/conf/hbase-site.xml
+----
+<property>
+  <name>hbase.rootdir</name>
+  <value>hdfs://bd:9000/hbase</value>
+</property>
+<property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+</property>
+<property>    
+  <name>hbase.zookeeper.property.clientPort</name>    
+  <value>2181</value>    
+</property>    
+<property>    
+  <name>hbase.zookeeper.quorum</name>    
+  <value>bd</value>    
+</property>    
+<property>    
+  <name>hbase.zookeeper.property.dataDir</name>    
+  <value>/opt/workspaces/data/zookeeper</value>    
+</property>   
+<property>    
+  <name>dfs.support.append</name>    
+  <value>true</value>    
+</property> 
+----
+
+=== 启动
+
+[source,bash]
+----
+./frameworks/hbase/bin/start-hbase.sh
+----
+
+=== 测试
+
+[source,bash]
+----
+./frameworks/hbase/bin/hbase shell
+create 'test', 'cf'
+list 'test'
+put 'test', 'row1', 'cf:a', 'value1'
+put 'test', 'row2', 'cf:b', 'value2'
+put 'test', 'row3', 'cf:c', 'value3'
+scan 'test'
+get 'test', 'row1'
+disable 'test'
+enable 'test'
+drop 'test'
+----
+ 
+
+
+
+
+
+

@@ -1,0 +1,187 @@
+== Hadoop
+
+****
+此主题介绍Hadoop的安装、配置及基础使用。
+****
+
+[quote,ibm.com]
+____
+Hadoop介绍 +
+https://www.ibm.com/developerworks/cn/data/library/techarticle/dm-1209hadoopbigdata/
+____
+
+[NOTE]
+.Hadoop基本信息
+----
+官网：http://hadoop.apache.org/
+官方教程：http://hadoop.apache.org/docs/current/
+不错的文章：http://www.cnblogs.com/edisonchou/p/4470682.html
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+mkdir data/hadoop
+# 创建Hadoop NameNode目录
+mkdir -p data/hadoop/hdfs/nn
+# 创建Hadoop DataNode目录
+mkdir -p data/hadoop/hdfs/dn
+# 创建Hadoop临时目录
+mkdir data/hadoop/tmp
+# 创建Hadoop日志目录
+mkdir logs/hadoop
+----
+
+[TIP]
+.官方教程
+http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#Pseudo-Distributed_Operation
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+tar -zxf hadoop-2.7.2.tar.gz
+rm -rf hadoop-2.7.2.tar.gz
+mv hadoop-2.7.2 ./frameworks/hadoop
+----
+
+=== 配置(伪分布式)
+
+[source,bash]
+.vi ./frameworks/hadoop/etc/hadoop/hadoop-env.sh
+----
+# 添加JDK目录
+export JAVA_HOME=/opt/env/java
+# 指定Hadoop日志写入到先前定义的目录
+export HADOOP_LOG_DIR=/opt/workspaces/logs/hadoop
+----
+
+[source,xml]
+.vi ./frameworks/hadoop/etc/hadoop/core-site.xml
+----
+<!--指定HDFS的地址，bd为对应的hostname，请自行修改-->
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://bd:9000</value>
+</property>
+<!--指定Hadoop的临时目录到先前定义的目录-->
+<property>
+    <name>hadoop.tmp.dir</name>
+    <value>file:/opt/workspaces/data/hadoop/tmp</value>
+</property>
+----
+
+WARNING: `hadoop.tmp.dir` 是hadoop文件系统依赖的基础配置，如hdfs-site.xml中不指定namenode和datanode的存放位置默认就放在这个路径中。`hadoop.tmp.dir` 默认存放在/tmp下，启动的时会被清空。
+
+[source,xml]
+.vi ./frameworks/hadoop/etc/hadoop/hdfs-site.xml
+----
+<!--副本数，默认是3，由于只有一个节点，所以不需要备份-->
+<property>
+    <name>dfs.replication</name>
+    <value>1</value>
+</property>
+<!--指定NameNode目录到先前定义的目录-->
+<property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/opt/workspaces/data/hadoop/hdfs/nn</value>
+</property>
+<!--指定DataNode目录到先前定义的目录-->
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/opt/workspaces/data/hadoop/hdfs/dn</value>
+</property>
+<!--实验环境，禁用权限认证-->
+<property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+</property>
+----
+
+CAUTION: 生产环境不允许`dfs.permissions.enabled=false`这可能导致HDFS数据被非法修改！
+
+
+=== 初始化
+
+[source,bash]
+.格式化NameNode
+----
+./frameworks/hadoop/bin/hdfs namenode -format
+----
+
+=== 启动与停止
+
+[source,bash]
+----
+# 启动NameNode
+./frameworks/hadoop/sbin/hadoop-daemon.sh start namenode
+# 启动DataNode
+./frameworks/hadoop/sbin/hadoop-daemon.sh start datanode
+# 停止NameNode
+./frameworks/hadoop/sbin/hadoop-daemon.sh stop namenode
+# 停止DataNode
+./frameworks/hadoop/sbin/hadoop-daemon.sh stop datanode
+----
+
+[NOTE]
+.不同的启动(停止)命令
+====
+start-all.sh 启动所有服务，不推荐使用
+start-dfs.sh 启动HDFS
+start-mapred.sh 启动MapR
+====
+
+=== 测试
+
+[source,bash]
+----
+# 查看HDFS文件
+./frameworks/hadoop/bin/hadoop fs -ls /
+----
+
+=== HDFS常用操作
+
+[source,bash]
+----
+# 上传文件到HDFS
+hadoop fs -put localfile /user/hadoop/hadoopfile hdfs://<host>:<port>/<path>
+hadoop fs -put localfile1 localfile2 /user/hadoop/hadoopdir
+hadoop fs -put localfile hdfs://nn.example.com/hadoop/hadoopfile
+
+# 创建HDFS目录
+hadoop fs -mkdir /user/hadoop/dir1 /user/hadoop/dir2
+hadoop fs -mkdir hdfs://nn1.example.com/user/hadoop/dir hdfs://nn2.example.com/user/hadoop/dir
+
+# 查看HDFS目录
+hadoop fs -ls /user/hadoop/file1
+
+# 查看HDFS文件内容
+hadoop fs -cat hdfs://nn1.example.com/file1 hdfs://nn2.example.com/file2
+hadoop fs -cat file:///file3 /user/hadoop/file4
+
+# 修改HDFS文件所有者
+hadoop fs -chown [-R] [OWNER][:[GROUP]] URI [URI ]
+
+# 修改HDFS文件权限
+hadoop fs -chmod [-R] <MODE[,MODE]... | OCTALMODE> URI [URI ...]
+
+# 获取HDFS到本地
+hadoop fs -copyToLocal [-ignorecrc] [-crc] URI <localdst>
+----
+
+[TIP]
+.命令大全
+https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/FileSystemShell.html
+
+=== 常见问题
+
+Name node is in safe mode::
+Hadoop启动的时候首先进入安全模式，安全模式主要是为了系统启动的时候检查各个DataNode上数据块的有效性，根据策略必要的复制或者删除部分数据块，如果datanode丢失的block达到一定的比例会一直处于安全模式状态即只读状态。可以通过命令`hadoop dfsadmin -safemode leave`命令强制离开。
+
+
+
+

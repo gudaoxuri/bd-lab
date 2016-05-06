@@ -1,0 +1,178 @@
+== Hive
+
+****
+此主题介绍Hive的安装、配置及基础使用。
+****
+
+[quote,csdn.net]
+____
+Hive介绍 +
+http://blog.csdn.net/zhoudaxia/article/details/8855937 +
+Hive语法大全 +
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual
+自定义函数 +
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF
+____
+
+[NOTE]
+.Hive基本信息
+----
+官网：http://hive.apache.org/
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+# 创建Hive数据目录
+mkdir data/hive
+# 创建Hive日志目录
+mkdir logs/hive
+----
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.cnnic.cn/apache/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz
+tar -zxf apache-hive-1.2.1-bin.tar.gz
+rm -rf apache-hive-1.2.1-bin.tar.gz
+mv apache-hive-1.2.1-bin ./frameworks/hive
+----
+
+=== 配置(单机)
+
+[source,bash]
+.vi ~/.profile
+----
+export HIVE_HOME=/opt/workspaces/frameworks/hive
+export PATH=$PATH:$HIVE_HOME/bin
+----
+
+ source ~/.profile
+
+[source,bash]
+.配置Mysql
+----
+mysql -u root -p
+create database hive; 
+grant all on *.* to'hive'@'%' identified by 'hive';  #账号hive,密码hive,所有IP都可以访问（%）
+flush privileges; 
+exit;
+----
+
+[source,bash]
+.创建HDFS目录
+----
+./frameworks/hadoop/bin/hadoop fs -mkdir /tmp
+./frameworks/hadoop/bin/hadoop fs -mkdir -p /user/hive/warehouse
+./frameworks/hadoop/bin/hadoop fs -chmod 777 /tmp
+./frameworks/hadoop/bin/hadoop fs -chmod 777 /user/hive/warehouse
+----
+
+[source,bash]
+.修改Hive配置
+----
+cat>./frameworks/hive/conf/hive-env.sh<<EOF
+export HADOOP_HEAPSIZE=1024
+HADOOP_HOME=/opt/workspaces/frameworks/hadoop
+export HIVE_CONF_DIR=/opt/workspaces/frameworks/hive/conf
+export HIVE_AUX_JARS_PATH=/opt/workspaces/frameworks/hive/lib
+EOF
+cat>./frameworks/hive/conf/hive-site.xml<<EOF
+<configuration>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://`<Docker Host IP>`:3306/hive</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.jdbc.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>hive</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>hive</value>
+    </property>
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://bd:9083</value> 
+    </property>
+    <property>
+        <name>hive.exec.local.scratchdir</name>
+        <value>/opt/workspaces/data/hive</value>
+    </property>
+    <property>
+        <name>hive.downloaded.resources.dir</name>
+        <value>/opt/workspaces/data/hive</value>
+    </property>
+    <property>
+        <name>hive.querylog.location</name>
+        <value>/opt/workspaces/data/hive</value>
+    </property>
+    <property>
+        <name>hive.server2.logging.operation.log.location</name>
+        <value>/opt/workspaces/data/hive</value>
+    </property>
+    <property>
+     <name>hive.querylog.location</name>
+     <value>/opt/workspaces/frameworks/logs/hive</value>
+    </property>
+    <property>
+      <name>hive.metastore.schema.verification</name>
+      <value>false</value>
+    </property>
+</configuration>
+EOF
+----
+
+ cp ./frameworks/hive/conf/hive-log4j.properties.template ./frameworks/hive/conf/hive-log4j.properties
+ 
+[source,bash]
+.vi ./frameworks/hive/conf/hive-log4j.properties
+----
+hive.log.dir=/opt/workspaces/frameworks/logs/hive
+----
+
+[source,bash]
+.下载mysql驱动
+----
+wget -P ./frameworks/hive/lib http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar
+----
+
+NOTE: 测试发现`5.1.38`需要使用SSL连接，可设置`jdbc://...&userSSL=false`禁用
+
+=== 启动
+
+[source,bash]
+----
+nohup ./frameworks/hive/bin/hive --service metastore >/dev/null 2>&1 &
+----
+
+=== 测试
+
+[source,bash]
+----
+cat>test_person.txt<<EOF
+tom 20
+jack    24
+nestor  29
+EOF
+./frameworks/hadoop/bin/hdfs dfs -mkdir /tmp/hivetest/
+./frameworks/hadoop/bin/hdfs dfs -put ./test_person.txt /tmp/hivetest/
+./frameworks/hive/bin/hive
+CREATE EXTERNAL TABLE test_person(name STRING,age INT)ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' LOCATION '/tmp/hivetest';
+select * from test_person;
+----
+ 
+
+
+
+
+
+

@@ -1,0 +1,103 @@
+== 综合实例：支付宝数据处理
+
+=== 业务流程
+
+[ditaa,file="images/alipay-process-flow.png"]
+--
+    +--------+      +-------+     +----------+      +----------+
+    |        |----->|       |---->|cBLU      |----->|   Hue    |
+    | Crawler|      | sh    |     |          |      | Zeppelin |
+    |        |      +-------+     |  Spark   |      +----------+
+    |        |      :    :        |          |
+    +---+----+      |    |        +----------+
+        |           |    \----\           
+        | Create    |         |
+        |     +-------+    +--------------+       
+        +---> |{d}    |--->|{d}       HDFS|
+              |alipay |    |              |
+              |(local)|    |     alipay   |
+              +-------+    +--------------+ 
+--
+
+. 数据抓取组件抓取支持宝数据存放在本地并调用大数据处理脚本
+. 大数据处理脚本将抓取到的数据转存到HDFS并执行Spark处理程序
+. Spark处理程序将数据处理后存到Hive表中
+. 使用Zeppelin/Hue完成基于Spark SQL的业务化数据分析
+
+=== 涉及技术/框架
+
+  Meteor、NodeJS 、HDFS、Spark SQL、Hive、Zeppelin/Hue
+  
+=== 环境
+
+. JDK >=1.8
+. Scala >=2.10.x
+. NodeJS >=4.x
+. Spark >=1.6.x
+. Hive >=1.2.x
+. Zeppelin >=0.5.6
+
+=== 大数据处理脚本
+
+这是一个很简单的脚本，大致逻辑是使用`hadoop fs -put`将文件上传到HDFS，再调用`spark-submit`提交执行作业。
+
+=== 如何运行
+
+==== 参数列表
+
+[source,bash]
+----
+Alipay Process 1.0
+Usage: Alipay Process [options]
+
+  -s <value> | --spark_master <value>
+        spark master address , e.g. local[2]
+  -a <value> | --aplipay_address <value>
+        aplipay address , default hdfs://bd:9000/user/alipay
+  -h <value> | --hive_db <value>
+         hive db , default alipay
+----
+
+==== 部署
+
+. 注释`pom.xml`中的`<spark.scope>compile</spark.scope>`
+. `mvn assembly:assembly`
+. 上传`target/alipay-process-0.0.1-jar-with-dependencies.jar到服务器
+. 执行`spark-submit --class run.mind.lab.alipayprocess.Startup <some path>/alipay-process-0.0.1-jar-with-dependencies.jar <args>`
+
+示例
+
+[source,bash]
+----
+./frameworks/spark/bin/spark-submit \
+   --class run.mind.lab.alipayprocess.Startup \
+   --master spark://bd:7077 \
+   --executor-memory 512M \
+   /opt/workspaces/apps/alipay_process/alipay-process-0.0.1-jar-with-dependencies.jar \
+    -s spark://bd:7077 \
+    -a hdfs://bd:9000/user/alipay
+----
+
+=== 接口
+
+==== 输入
+
+Alipay账务数据，保存到HDFS
+
+格式示例：
+
+ withdraw	提现	1506300077173571	20150630000000000000020002959288	chenrg2013@asto.com.cn	dummy	0	5000000	7569459		2015-07-01 06:28:17
+ transfer	交易付款	2015062821001001000282250033	T200P1108608169315343	chenrg2013@asto.com.cn	1353212988@qq.com	12800	0	7582259	忆红妆敬酒服短款红色新娘结婚晚礼服 夏季伴娘孕妇婚纱2015新款	2015-07-01 08:23:43
+ transfer	转账	BO20150701009774914702	CAE_POINT_92362913436	chenrg2013@asto.com.cn	jifenb2c@taobao.com	0	64	7582195	代扣返点积分1108608169315343	2015-07-01 08:23:43
+ transfer	交易付款	2015062621001001860282310083	T200P1103148967888053	chenrg2013@asto.com.cn	18863595622	12500	0	7594695	忆红妆敬酒服短款红色新娘结婚晚礼服 夏季伴娘孕妇婚纱2015新款	2015-07-01 08:34:48
+
+==== 输出
+
+Hive 数据库，库名`alipay`，有两张表：.finance 账务流水表和 trade_amount_monthly 月交易额统计表
+
+=== 使用zeppelin查询
+
+示例：
+
+ %sql
+ select alipayid,ordermonth,sum(price) from alipay.finance where category='交易付款' group by alipayid,ordermonth

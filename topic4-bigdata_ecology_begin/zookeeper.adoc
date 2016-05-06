@@ -1,0 +1,116 @@
+== Zookeeper
+
+****
+此主题介Zookeeper的安装、配置及基础使用。
+****
+
+[quote,ibm.com]
+____
+Zookeeper介绍 +
+http://www.ibm.com/developerworks/cn/data/library/bd-zookeeper/
+____
+
+[NOTE]
+.Spark基本信息
+----
+官网：https://zookeeper.apache.org/
+官方教程：https://zookeeper.apache.org/doc/r3.4.8/
+----
+
+=== 环境准备
+
+[source,bash]
+----
+# 切换到工作空间
+cd /opt/workspaces
+# 创建Zookeeper数据目录
+mkdir data/zookeeper
+# 创建Zookeeper日志目录
+mkdir logs/zookeeper
+----
+
+=== 安装
+
+[source,bash]
+----
+wget http://mirrors.hust.edu.cn/apache/zookeeper/current/zookeeper-3.4.8.tar.gz
+tar -zxf zookeeper-3.4.8.tar.gz
+rm -rf zookeeper-3.4.8.tar.gz
+mv zookeeper-3.4.8 ./frameworks/zookeeper
+----
+
+=== 配置
+
+[source,bash]
+----
+cat>./frameworks/zookeeper/conf/zoo.cfg<<EOF
+# 服务器之间或客户端与服务器之间维持心跳的时间间隔
+tickTime=2000
+# 数据目录
+dataDir=/opt/workspaces/data/zookeeper
+# 日志目录
+dataLogDir=/opt/workspaces/logs/zookeeper
+# 客户端连接端口
+clientPort=2181
+EOF
+----
+
+=== 启动与停止
+
+[source,bash]
+----
+./frameworks/zookeeper/bin/zkServer.sh start
+----
+
+=== 测试
+
+[source,bash]
+----
+./frameworks/zookeeper/bin/zkCli.sh -server localhost:2181
+   ls /
+   [zookeeper]
+----
+
+=== Zookeepr常用命令
+
+[source,bash]
+----
+# 创建文件并初始内容
+create /zk "test"
+
+# 获取文件内容
+get /zk
+
+# 修改文件内容
+set /zk "new"
+
+# 显示目录
+ls /
+
+# 删除文件
+delete /zk
+
+# 退出客户端
+quit
+----
+
+[NOTE]
+.Zookeeper znode节点属性
+====
+* cZxid：创建节点的事务的zxid
+* mZxid：对znode最近修改的zxid
+* ctime：以距离时间原点(epoch)的毫秒数表示的znode创建时间
+* mtime：以距离时间原点(epoch)的毫秒数表示的znode最近修改时间
+* pZxid : 子节点最后一次变更的zxid
+* version：znode数据的修改次数
+* cversion：znode子节点修改次数
+* aversion：znode的ACL修改次数
+* ephemeralOwner：如果znode是临时节点，则指示节点所有者的会话ID；如果不是临时节点，则为零。
+* dataLength：znode数据长度。
+* numChildren：znode子节点个数
+====
+
+
+
+
+
