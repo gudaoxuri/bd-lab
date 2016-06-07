@@ -25,12 +25,6 @@ ____
 # 切换到工作空间
 cd /opt/workspaces
 mkdir data/hadoop
-# 创建Hadoop NameNode目录
-mkdir -p data/hadoop/hdfs/nn
-# 创建Hadoop DataNode目录
-mkdir -p data/hadoop/hdfs/dn
-# 创建Hadoop临时目录
-mkdir data/hadoop/tmp
 # 创建Hadoop日志目录
 mkdir logs/hadoop
 ----
@@ -104,7 +98,6 @@ WARNING: `hadoop.tmp.dir` 是hadoop文件系统依赖的基础配置，如hdfs-s
 
 CAUTION: 生产环境不允许`dfs.permissions.enabled=false`这可能导致HDFS数据被非法修改！
 
-
 === 初始化
 
 [source,bash]
@@ -176,6 +169,52 @@ hadoop fs -copyToLocal [-ignorecrc] [-crc] URI <localdst>
 [TIP]
 .命令大全
 https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/FileSystemShell.html
+
+=== 完全分布式配置
+
+修改Master
+
+[source,xml]
+.vi ./frameworks/hadoop/etc/hadoop/core-site.xml
+----
+<!--指定HDFS的地址，bd为对应的hostname，请自行修改-->
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://bd0:9000</value>
+</property>
+----
+
+修改副本数，默认是3
+
+[source,xml]
+.vi ./frameworks/hadoop/etc/hadoop/hdfs-site.xml
+----
+<property>
+    <name>dfs.replication</name>
+    <value>3</value>
+</property>
+----
+
+添加`slave`
+
+[source,bash]
+.vi ./frameworks/hadoop/etc/hadoop/slaves
+----
+bd0
+bd1
+bd2
+bd...
+----
+
+复制`./frameworks/hadoop/`到各个主机
+[source,bash]
+----
+scp -r ./frameworks/hadoop/ bd1:/opt/workspaces/frameworks/
+scp -r ./frameworks/hadoop/ bd2:/opt/workspaces/frameworks/
+scp -r ./frameworks/hadoop/ bd...:/opt/workspaces/frameworks/
+----
+
+启动HDFS `./frameworks/hadoop/sbin/start-dfs.sh`
 
 === 常见问题
 

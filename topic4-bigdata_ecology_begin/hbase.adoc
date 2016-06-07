@@ -37,7 +37,7 @@ rm -rf hbase-1.2.1-bin.tar.gz
 mv hbase-1.2.1 ./frameworks/hbase
 ----
 
-=== 配置(完全分布式)
+=== 配置(单机)
 
 [source,bash]
 .vi ./frameworks/hbase/conf/hbase-env.sh
@@ -99,8 +99,43 @@ disable 'test'
 enable 'test'
 drop 'test'
 ----
- 
 
+=== 完全分布式配置
+
+修改配置，添加zk节点
+
+[source,bash]
+.vi ./frameworks/hbase/conf/hbase-site.xml
+----
+<property>
+  <name>hbase.rootdir</name>
+  <value>hdfs://bd0:9000/hbase</value>
+</property>
+<property>
+  <name>hbase.zookeeper.quorum</name>
+  <value>bd0,bd1,bd2 </value>
+</property>
+----
+
+添加regionservers
+
+[source,bash]
+----
+cat>/opt/workspaces/frameworks/hbase/conf/regionservers<<EOF
+bd1
+bd2
+EOF
+----
+
+复制`./frameworks/hbase/`到各个主机
+[source,bash]
+----
+scp -r ./frameworks/hbase/ bd1:/opt/workspaces/frameworks/
+scp -r ./frameworks/hbase/ bd2:/opt/workspaces/frameworks/
+scp -r ./frameworks/hbase/ bd...:/opt/workspaces/frameworks/
+----
+
+启动HBase `./frameworks/hbase/bin/start-hbase.sh`
 
 
 

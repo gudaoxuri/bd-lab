@@ -39,7 +39,7 @@ rm -rf zookeeper-3.4.8.tar.gz
 mv zookeeper-3.4.8 ./frameworks/zookeeper
 ----
 
-=== 配置
+=== 配置（单机）
 
 [source,bash]
 ----
@@ -109,6 +109,43 @@ quit
 * dataLength：znode数据长度。
 * numChildren：znode子节点个数
 ====
+
+=== 完全分布式配置
+
+添加节点
+
+[source,bash]
+.vi ./frameworks/zookeeper/conf/zoo.cfg
+----
+# 连接leader的等待的最长时间(秒)
+initLimit=5
+# 标识 Leader 与 Follower 之间发送消息，请求和应答时间最长时间
+syncLimit=2
+# 节点列表
+server.0=bd0:2888:3888
+server.1=bd1:2888:3888
+server.2=bd2:2888:3888
+----
+
+添加本机标识
+
+[source,bash]
+.每个节点都要操作，内容为当前服务节点的编号
+----
+cat>/opt/workspaces/data/zookeeper/myid<<EOF
+0
+EOF
+----
+
+复制`./frameworks/zookeeper/`到各个主机
+[source,bash]
+----
+scp -r ./frameworks/zookeeper/ bd1:/opt/workspaces/frameworks/
+scp -r ./frameworks/zookeeper/ bd2:/opt/workspaces/frameworks/
+scp -r ./frameworks/zookeeper/ bd...:/opt/workspaces/frameworks/
+----
+
+在每个节点中分别启动zk `./frameworks/zookeeper/bin/zkServer.sh start`
 
 
 

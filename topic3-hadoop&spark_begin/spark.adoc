@@ -261,7 +261,36 @@ http://spark-internals.books.yourtion.com/index.html +
 此文写得挺详细，由于撰写时间较早，与新版本有出入（比如Shuffle Manager现在默认是Sort-based），但不影响对Spark的整体理解。
 ----
  
+=== 完全分布式配置
 
+修改Master
+
+[source,bash]
+.vi ./frameworks/spark/conf/spark-env.sh
+----
+export SPARK_MASTER_IP=bd1
+----
+
+添加`slave`
+
+[source,bash]
+.vi ./frameworks/spark/conf/slaves
+----
+bd0
+bd1
+bd2
+bd...
+----
+
+复制`./frameworks/spark/`到各个主机
+[source,bash]
+----
+scp -r ./frameworks/spark/ bd1:/opt/workspaces/frameworks/
+scp -r ./frameworks/spark/ bd2:/opt/workspaces/frameworks/
+scp -r ./frameworks/spark/ bd...:/opt/workspaces/frameworks/
+----
+
+启动HDFS `./frameworks/spark/sbin/start-all.sh`
 
 
 

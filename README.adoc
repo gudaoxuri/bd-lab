@@ -278,6 +278,20 @@ chmod 777 /share
 /etc/init.d/smb start
 ----
 
+[NOTE]
+.多机完全分布式环境
+====
+. 修改各hostname名为`bd0`、`bd1`、`bd2`、`bd...`
+. 为各主机追加`/etc/hosts`
+
+ ip0 bd0
+ ip1 bd1
+ ip2 bd2
+ ip... bd...
+
+. 确保各主机（实际上Worker间不需要）可以实现免密钥SSH登录
+====
+
 === 基本环境创建
 
 SSH到实验环境
