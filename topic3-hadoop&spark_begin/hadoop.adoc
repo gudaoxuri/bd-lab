@@ -37,7 +37,7 @@ http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCl
 
 [source,bash]
 ----
-wget http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+wget http://mirrors.cnnic.cn/apache/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
 tar -zxf hadoop-2.7.2.tar.gz
 rm -rf hadoop-2.7.2.tar.gz
 mv hadoop-2.7.2 ./frameworks/hadoop

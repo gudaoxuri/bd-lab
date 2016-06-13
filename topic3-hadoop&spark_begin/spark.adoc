@@ -37,7 +37,7 @@ http://spark.apache.org/docs/latest/spark-standalone.html
 
 [source,bash]
 ----
-wget http://mirrors.hust.edu.cn/apache/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz
+wget http://mirrors.cnnic.cn/apache/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz
 tar -zxf spark-1.6.1-bin-hadoop2.6.tgz
 rm -rf spark-1.6.1-bin-hadoop2.6.tgz
 mv spark-1.6.1-bin-hadoop2.6 ./frameworks/spark

@@ -17,7 +17,7 @@ TIP: Sqoop有两大版本，Sqoop稳定，Sqoop2目前问题比较多，以下�
 
 [source,bash]
 ----
-wget http://mirror.bit.edu.cn/apache/sqoop/1.4.6/sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
+wget http://mirrors.cnnic.cn/apache/sqoop/1.4.6/sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
 tar -zxf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
 rm -rf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz
 mv sqoop-1.4.6.bin__hadoop-2.0.4-alpha ./frameworks/sqoop

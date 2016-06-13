@@ -33,7 +33,7 @@ mkdir logs/zookeeper
 
 [source,bash]
 ----
-wget http://mirrors.hust.edu.cn/apache/zookeeper/current/zookeeper-3.4.8.tar.gz
+wget http://mirrors.cnnic.cn/apache/zookeeper/current/zookeeper-3.4.8.tar.gz
 tar -zxf zookeeper-3.4.8.tar.gz
 rm -rf zookeeper-3.4.8.tar.gz
 mv zookeeper-3.4.8 ./frameworks/zookeeper
